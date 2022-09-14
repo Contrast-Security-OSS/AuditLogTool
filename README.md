@@ -1,8 +1,6 @@
 ### 概要
-TeamServerに登録されている脆弱性情報及びライブラリ情報のCSV形式レポートを取得するツールです。  
-TeamServerから直接CSVレポートを出力することも出来ますが、本ツールではより多くの情報を取得したり  
-その情報をカスタマイズしたりすることが出来ます。  
-使用方法の詳細については [Release](https://github.com/Contrast-Security-OSS/CSVDLTool/releases) からダウンロードできるzipファイルに同梱のマニュアルpdfをご確認ください。
+TeamServerの監査ログを取得するツールです。CSV形式で出力することもできます。  
+使用方法の詳細については [Release](https://github.com/Contrast-Security-OSS/AuditLogTool/releases) からダウンロードできるzipファイルに同梱のマニュアルpdfをご確認ください。
 
 
 ### 動作環境
@@ -60,7 +58,7 @@ build\libsの下にjarが作成されます。
   ```bash
   ./gradlew cleanEclipse eclipse
   ```
-Eclipseでプロジェクトをリフレッシュすると、あとは実行でcom.contrastsecurity.csvdltool.Mainで、ツールが起動します。
+Eclipseでプロジェクトをリフレッシュすると、あとは実行でcom.contrastsecurity.auditlogtool.Mainで、ツールが起動します。
 
 #### Windows配布用のexe化について
 
@@ -89,14 +87,14 @@ Eclipseでプロジェクトをリフレッシュすると、あとは実行でc
 - Windows  
   - エイリアスの確認
     ```powershell
-    keytool -list -v -storetype pkcs12 -keystore C:\Users\turbou\Desktop\CSVDLTool_work\XXXXX.pfx
+    keytool -list -v -storetype pkcs12 -keystore C:\Users\turbou\Desktop\AuditLogTool_work\XXXXX.pfx
     # 証明書パスワードを入力
     ```
   - 署名  
     launch4jのsign4jを使用します。
     ```powershell
     cd C:\Program Files (x86)\launch4j\sign4j
-    sign4j.exe java -jar jsign-2.0.jar --alias 1 --keystore C:\Users\turbou\Desktop\CSVDLTool_work\XXXXX.pfx --storepass [パスワード] C:\Users\turbou\Desktop\CSVDLTool_work\common\CSVDLTool_1.8.2.exe
+    sign4j.exe java -jar jsign-2.0.jar --alias 1 --keystore C:\Users\turbou\Desktop\AuditLogTool_work\XXXXX.pfx --storepass [パスワード] C:\Users\turbou\Desktop\AuditLogTool_work\common\AuditLogTool_1.0.0.exe
     ```
   - 署名の確認  
     署名の確認については、exeを右クリック->プロパティ で確認できます。
@@ -106,27 +104,22 @@ Eclipseでプロジェクトをリフレッシュすると、あとは実行でc
     読み込めたら、Common Name(通称)をコピー
   - 署名
     ```bash
-    codesign --deep -s "Contrast Security, Inc." -v CSVDLTool_1.8.2.app
-    codesign --deep -s "Contrast Security, Inc." -v CSVDLTool_1.8.2_auditlog.app
+    codesign --deep -s "Contrast Security, Inc." -v AuditLogTool_1.0.0.app
     ```
   - 署名の確認
     ```bash
-    codesign -d --verbose=4 CSVDLTool_1.8.2.app
-    codesign -d --verbose=4 CSVDLTool_1.8.2_auditlog.app
+    codesign -d --verbose=4 AuditLogTool_1.0.0.app
     ```
     
 #### 圧縮について補足
 
 - Mac
   ```bash
-  7z a CSVDLTool_1.8.2.cli7z CSVDLTool_1.8.2.app/
-  7z a CSVDLTool_1.8.2_auditlog.cli7z CSVDLTool_1.8.2_auditlog.app/
+  7z a AuditLogTool_1.8.2.cli7z AuditLogTool_1.8.2.app/
   ```
 
 ### 起動後の使い方について
 
-- contrast_security.yamlをエージェントのDLウィザードからDLしてexeと同じ場所に配置してください。（任意）
-  任意というのは、yamlから読み込まなくても、あとで全て手入力でも可能だからです。
 - 設定画面で、TeamServerのURL、ユーザ名、サービスキーを個人のものに変更してください。
 - 組織情報の追加ボタンで組織を追加してください。
   組織は複数登録が可能です。CSVレポートを取得する対象の組織にチェックを入れてください。
@@ -135,24 +128,24 @@ Eclipseでプロジェクトをリフレッシュすると、あとは実行でc
 - 脆弱性のCSVを取得するアプリをダブルクリックなり矢印で選択して右のボックスに移動します。（これが対象となります）
 - 取得ボタンを押下します。成功するとexeと同じ場所にcsvファイルが出力されています。
 
-使用方法の詳細については [Release](https://github.com/Contrast-Security-OSS/CSVDLTool/releases) からダウンロードできるzipファイルに同梱のマニュアルpdfをご確認ください。
+使用方法の詳細については [Release](https://github.com/Contrast-Security-OSS/AuditLogTool/releases) からダウンロードできるzipファイルに同梱のマニュアルpdfをご確認ください。
 
 ### リリースについて
-[Release](https://github.com/Contrast-Security-OSS/CSVDLTool/releases) で以下3種類のバイナリを提供しています。ビルド不要でダウンロード後すぐにお使いいただけます。
+[Release](https://github.com/Contrast-Security-OSS/AuditLogTool/releases) で以下3種類のバイナリを提供しています。ビルド不要でダウンロード後すぐにお使いいただけます。
 - Windows
-  - CSVDLTool_X.X.X.zip  
+  - AuditLogTool_X.X.X.zip  
     初回ダウンロードの場合はこちらをダウンロードして解凍して、お使いください。  
     jreフォルダ（1.8.0_202）が同梱されているため、exeの起動ですぐにツールを使用できます。
-  - CSVDLTool_X.X.X.exe  
+  - AuditLogTool_X.X.X.exe  
     既にzipをダウンロード済みの場合はexeのダウンロードと入れ替えのみでツールを使用できます。
 - Mac
-  - CSVDLTool_X.X.X.cli7z  
+  - AuditLogTool_X.X.X.cli7z  
     下記コマンドで解凍してください。  
     ```bash
     # p7zipのインストールについては
     brew install p7zip
     # 解凍コマンド
-    7z x CSVDLTool_X.X.X.cli7z
+    7z x AuditLogTool_X.X.X.cli7z
     ```
 
 以上
