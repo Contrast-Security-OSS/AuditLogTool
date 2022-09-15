@@ -89,6 +89,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
         int sleepAudit = this.ps.getInt(PreferenceConstants.SLEEP_AUDITLOG);
         boolean isSuperAdmin = this.ps.getBoolean(PreferenceConstants.IS_SUPERADMIN);
         Organization baseOrg = new Organization();
+        baseOrg.setName("SuperAdmin");
         baseOrg.setOrganization_uuid(this.ps.getString(PreferenceConstants.ORG_ID));
         baseOrg.setApikey(this.ps.getString(PreferenceConstants.API_KEY));
 

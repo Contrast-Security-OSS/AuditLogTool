@@ -842,11 +842,7 @@ public class Main implements PropertyChangeListener {
             item = new TableItem(auditLogTable, SWT.CENTER);
         }
         item.setText(1, audit.getDateStr());
-        if (audit.isSuperAdmin()) {
-            item.setText(2, "SuperAdmin");
-        } else {
-            item.setText(2, audit.getOrganization().getName());
-        }
+        item.setText(2, audit.getOrganization().getName());
         item.setText(3, audit.getUserName());
         item.setText(4, audit.getMessage());
     }
