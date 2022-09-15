@@ -500,7 +500,7 @@ public class BasePreferencePage extends PreferencePage {
                 }
                 // String path = pathDialog.getDirPath();
                 if (orgList.contains(rtnOrg)) {
-                    MessageDialog.openError(composite.getShell(), "組織", "すでに設定されている組織です。");
+                    MessageDialog.openError(composite.getShell(), "組織の追加", "すでに設定されている組織です。");
                     return;
                 }
                 orgList.add(rtnOrg);

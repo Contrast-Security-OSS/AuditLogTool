@@ -143,7 +143,7 @@ public class OrganizationDialog extends Dialog {
         Organization org = new Organization();
         org.setApikey(apiKeyTxt.getText().trim());
         org.setOrganization_uuid(orgIdTxt.getText().trim());
-        org.setValid(false);
+        org.setValid(true);
         Api orgApi = null;
         if (svc == null) {
             orgApi = new OrganizationForBasicApi(this.shell, this.ps, org, url, usr);
@@ -153,17 +153,17 @@ public class OrganizationDialog extends Dialog {
         try {
             Organization rtnOrg = (Organization) orgApi.get();
             if (rtnOrg == null) {
-                MessageDialog.openError(getShell(), "組織情報の確認", "組織が見つかりません。");
+                MessageDialog.openError(getShell(), "組織の追加", "組織が見つかりません。");
             } else {
                 org.setName(rtnOrg.getName());
                 this.org = org;
             }
         } catch (ApiException e) {
-            MessageDialog.openWarning(getShell(), "組織情報の確認", String.format("TeamServerからエラーが返されました。\r\n%s", e.getMessage()));
+            MessageDialog.openWarning(getShell(), "組織の追加", String.format("TeamServerからエラーが返されました。\r\n%s", e.getMessage()));
         } catch (NonApiException e) {
-            MessageDialog.openError(getShell(), "組織情報の確認", String.format("想定外のステータスコード: %s\r\nログファイルをご確認ください。", e.getMessage()));
+            MessageDialog.openError(getShell(), "組織の追加", String.format("想定外のステータスコード: %s\r\nログファイルをご確認ください。", e.getMessage()));
         } catch (Exception e) {
-            MessageDialog.openError(getShell(), "組織情報の確認", String.format("不明なエラーです。ログファイルをご確認ください。\r\n%s", e.getMessage()));
+            MessageDialog.openError(getShell(), "組織の追加", String.format("不明なエラーです。ログファイルをご確認ください。\r\n%s", e.getMessage()));
         }
         super.okPressed();
     }
