@@ -125,8 +125,8 @@ public class Main implements PropertyChangeListener {
     public static final String CSV_MAC_ENCODING = "UTF-8";
     public static final String FILE_ENCODING = "UTF-8";
 
-    public static final int MINIMUM_SIZE_WIDTH = 640;
-    public static final int MINIMUM_SIZE_WIDTH_MAC = 720;
+    public static final int MINIMUM_SIZE_WIDTH = 800;
+    public static final int MINIMUM_SIZE_WIDTH_MAC = 880;
     public static final int MINIMUM_SIZE_HEIGHT = 640;
 
     private AuditLogToolShell shell;
