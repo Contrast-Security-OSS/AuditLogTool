@@ -45,7 +45,6 @@ import org.eclipse.swt.widgets.Text;
 import com.contrastsecurity.auditlogtool.AuditLogToolShell;
 import com.contrastsecurity.auditlogtool.api.Api;
 import com.contrastsecurity.auditlogtool.api.OrganizationApi;
-import com.contrastsecurity.auditlogtool.api.OrganizationForBasicApi;
 import com.contrastsecurity.auditlogtool.exception.ApiException;
 import com.contrastsecurity.auditlogtool.exception.NonApiException;
 import com.contrastsecurity.auditlogtool.model.Organization;
@@ -144,12 +143,7 @@ public class OrganizationDialog extends Dialog {
         org.setApikey(apiKeyTxt.getText().trim());
         org.setOrganization_uuid(orgIdTxt.getText().trim());
         org.setValid(true);
-        Api orgApi = null;
-        if (svc == null) {
-            orgApi = new OrganizationForBasicApi(this.shell, this.ps, org, url, usr);
-        } else {
-            orgApi = new OrganizationApi(this.shell, this.ps, org, url, usr, svc);
-        }
+        Api orgApi = new OrganizationApi(this.shell, this.ps, org, url, usr, svc);
         try {
             Organization rtnOrg = (Organization) orgApi.get();
             if (rtnOrg == null) {

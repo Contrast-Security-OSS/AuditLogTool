@@ -158,12 +158,30 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                         SubProgressMonitor sub1_3Monitor = new SubProgressMonitor(sub1Monitor, 20);
                         sub1Monitor.subTask("一時グループを作成しています...");
                         sub1_3Monitor.beginTask("", 100);
-                        Api groupsApi = new GroupsApi(this.shell, this.ps, baseOrg);
-                        List<Group> groups = (List<Group>) groupsApi.get();
+                        List<Group> groups = new ArrayList<Group>();
+                        Api groupsApi = new GroupsApi(this.shell, this.ps, baseOrg, 0);
+                        List<Group> tmpGroups = (List<Group>) groupsApi.get();
+                        int totalGroupCount = groupsApi.getTotalCount();
+                        groups.addAll(tmpGroups);
+                        boolean groupIncompleteFlg = false;
+                        groupIncompleteFlg = totalGroupCount > tmpGroups.size();
+                        while (groupIncompleteFlg) {
+                            Thread.sleep(100);
+                            if (monitor.isCanceled()) {
+                                throw new InterruptedException("キャンセルされました。");
+                            }
+                            groupsApi = new GroupsApi(this.shell, this.ps, baseOrg, groups.size());
+                            tmpGroups = (List<Group>) groupsApi.get();
+                            groups.addAll(tmpGroups);
+                            groupIncompleteFlg = totalGroupCount > groups.size();
+                        }
+                        for (Group grp : groups) {
+                            System.out.println(grp.getName());
+                        }
                         int groupId = -1;
-                        for (Group cg : groups) {
-                            if (cg.getName().equals(this.ps.getString(PreferenceConstants.GROUP_NAME))) {
-                                groupId = cg.getGroup_id();
+                        for (Group grp : groups) {
+                            if (grp.getName().equals(this.ps.getString(PreferenceConstants.GROUP_NAME))) {
+                                groupId = grp.getGroup_id();
                             }
                         }
                         if (groupId > -1) {
@@ -174,15 +192,34 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                         Api groupCreateApi = new GroupCreateApi(this.shell, this.ps, baseOrg, orgs);
                         String rtnMsg = (String) groupCreateApi.post();
                         if (rtnMsg.equals("true")) {
-                            groups = (List<Group>) groupsApi.get();
+                            groups.clear();
+                            groupsApi = new GroupsApi(this.shell, this.ps, baseOrg, 0);
+                            tmpGroups = (List<Group>) groupsApi.get();
+                            totalGroupCount = groupsApi.getTotalCount();
+                            groups.addAll(tmpGroups);
+                            groupIncompleteFlg = false;
+                            groupIncompleteFlg = totalGroupCount > tmpGroups.size();
+                            while (groupIncompleteFlg) {
+                                Thread.sleep(100);
+                                if (monitor.isCanceled()) {
+                                    throw new InterruptedException("キャンセルされました。");
+                                }
+                                groupsApi = new GroupsApi(this.shell, this.ps, baseOrg, groups.size());
+                                tmpGroups = (List<Group>) groupsApi.get();
+                                groups.addAll(tmpGroups);
+                                groupIncompleteFlg = totalGroupCount > groups.size();
+                            }
                             groupId = -1;
-                            for (Group cg : groups) {
-                                if (cg.getName().equals(this.ps.getString(PreferenceConstants.GROUP_NAME))) {
-                                    groupId = cg.getGroup_id();
+                            for (Group grp : groups) {
+                                if (grp.getName().equals(this.ps.getString(PreferenceConstants.GROUP_NAME))) {
+                                    groupId = grp.getGroup_id();
                                 }
                             }
                             if (groupId > -1) {
                                 this.addedGroupId = groupId;
+                            } else {
+                                sub1_3Monitor.done();
+                                throw new ApiException("一時グループの作成に失敗しました。");
                             }
                         }
                         sub1_3Monitor.worked(50);
@@ -223,9 +260,12 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
             monitor.subTask("各組織の監査ログを取得...");
             sub2Monitor.beginTask("", this.allOrgs.size() * 100);
             for (Organization org : this.allOrgs) {
+                if (monitor.isCanceled()) {
+                    throw new InterruptedException("キャンセルされました。");
+                }
                 if (org.isLocked()) {
                     errorOrgs.add(org);
-                    sub2Monitor.worked(1);
+                    sub2Monitor.worked(100);
                     continue;
                 }
                 sub2Monitor.subTask(String.format("各組織の監査ログを取得...%s", org.getName()));
@@ -261,7 +301,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                         auditLogIncompleteFlg = totalAuditLogCount > audits.size();
                     }
                     this.allAuditLogs.addAll(audits);
-                    sub2Monitor.worked(1);
+                    sub2_1Monitor.done();
                     Thread.sleep(100);
                 } catch (InterruptedException ie) {
                     throw ie;

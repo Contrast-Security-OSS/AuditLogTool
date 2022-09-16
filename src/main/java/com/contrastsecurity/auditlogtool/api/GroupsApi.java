@@ -35,13 +35,17 @@ import com.google.gson.reflect.TypeToken;
 
 public class GroupsApi extends Api {
 
-    public GroupsApi(Shell shell, IPreferenceStore ps, Organization org) {
+    private int LIMIT = 100;
+    private int offset;
+
+    public GroupsApi(Shell shell, IPreferenceStore ps, Organization org, int offset) {
         super(shell, ps, org);
+        this.offset = offset;
     }
 
     @Override
     protected String getUrl() {
-        return String.format("%s/api/ng/superadmin/ac/groups", this.contrastUrl);
+        return String.format("%s/api/ng/superadmin/ac/groups?limit=%d&offset=%d", this.contrastUrl, LIMIT, this.offset);
     }
 
     @Override
@@ -50,6 +54,7 @@ public class GroupsApi extends Api {
         Type contType = new TypeToken<GroupsJson>() {
         }.getType();
         GroupsJson groupsJson = gson.fromJson(response, contType);
+        this.totalCount = groupsJson.getCount();
         return groupsJson.getGroups();
     }
 
