@@ -61,7 +61,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
 
     private Shell shell;
     private PreferenceStore ps;
-    private List<Organization> orgs;
+    private List<Organization> allOrgs;
     private Date frDetectedDate;
     private Date toDetectedDate;
     private List<AuditLog> allAuditLogs;
@@ -75,7 +75,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
     public AuditLogsGetWithProgress(Shell shell, PreferenceStore ps, List<Organization> orgs, Date frDate, Date toDate) {
         this.shell = shell;
         this.ps = ps;
-        this.orgs = orgs;
+        this.allOrgs = orgs;
         this.frDetectedDate = frDate;
         this.toDetectedDate = toDate;
         this.allAuditLogs = new ArrayList<AuditLog>();
@@ -102,7 +102,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                 SubProgressMonitor sub1Monitor = new SubProgressMonitor(monitor, 30);
                 sub1Monitor.beginTask("", 100);
                 try {
-                    SubProgressMonitor sub1_1Monitor = new SubProgressMonitor(sub1Monitor, this.ps.getBoolean(PreferenceConstants.IS_CREATEGROUP) ? 60 : 80);
+                    SubProgressMonitor sub1_1Monitor = new SubProgressMonitor(sub1Monitor, this.ps.getBoolean(PreferenceConstants.IS_CREATEGROUP) ? 50 : 70);
                     sub1Monitor.subTask("SuperAdminの監査ログを取得...");
                     List<AuditLog> audits = new ArrayList<AuditLog>();
                     Api superAdminAuditApi = new SuperAdminAuditLogApi(this.shell, this.ps, baseOrg, frDetectedDate, toDetectedDate, 0);
@@ -132,10 +132,25 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                     }
                     Thread.sleep(100);
                     sub1Monitor.subTask("組織一覧を取得します...");
-                    SubProgressMonitor sub1_2Monitor = new SubProgressMonitor(sub1Monitor, 10);
+                    SubProgressMonitor sub1_2Monitor = new SubProgressMonitor(sub1Monitor, 15);
                     sub1_2Monitor.beginTask("", 100);
-                    Api organizationsApi = new OrganizationsApi(this.shell, this.ps, baseOrg);
-                    List<Organization> organizations = (List<Organization>) organizationsApi.get();
+                    List<Organization> orgs = new ArrayList<Organization>();
+                    Api orgsApi = new OrganizationsApi(this.shell, this.ps, baseOrg, 0);
+                    List<Organization> tmpOrgs = (List<Organization>) orgsApi.get();
+                    int totalOrgCount = orgsApi.getTotalCount();
+                    orgs.addAll(tmpOrgs);
+                    boolean orgIncompleteFlg = false;
+                    orgIncompleteFlg = totalOrgCount > tmpOrgs.size();
+                    while (orgIncompleteFlg) {
+                        Thread.sleep(100);
+                        if (monitor.isCanceled()) {
+                            throw new InterruptedException("キャンセルされました。");
+                        }
+                        orgsApi = new OrganizationsApi(this.shell, this.ps, baseOrg, orgs.size());
+                        tmpOrgs = (List<Organization>) orgsApi.get();
+                        orgs.addAll(tmpOrgs);
+                        orgIncompleteFlg = totalOrgCount > orgs.size();
+                    }
                     sub1_2Monitor.worked(100);
                     sub1_2Monitor.done();
                     Thread.sleep(100);
@@ -156,7 +171,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                             throw new ApiException("すでにグループが存在しています。");
                         }
                         sub1_3Monitor.worked(50);
-                        Api groupCreateApi = new GroupCreateApi(this.shell, this.ps, baseOrg, organizations);
+                        Api groupCreateApi = new GroupCreateApi(this.shell, this.ps, baseOrg, orgs);
                         String rtnMsg = (String) groupCreateApi.post();
                         if (rtnMsg.equals("true")) {
                             groups = (List<Group>) groupsApi.get();
@@ -177,10 +192,10 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                         throw new InterruptedException("キャンセルされました。");
                     }
                     Thread.sleep(100);
-                    SubProgressMonitor sub1_3Monitor = new SubProgressMonitor(sub1Monitor, 10);
+                    SubProgressMonitor sub1_3Monitor = new SubProgressMonitor(sub1Monitor, 15);
                     sub1Monitor.subTask("各組織のAPI Keyを取得します...");
-                    sub1_3Monitor.beginTask("", organizations.size());
-                    for (Organization org : organizations) {
+                    sub1_3Monitor.beginTask("", orgs.size());
+                    for (Organization org : orgs) {
                         if (org.isLocked()) {
                             org.setRemarks("ロックされています。");
                             sub1_3Monitor.worked(1);
@@ -189,9 +204,9 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                         Api apiKeyApi = new ApiKeyApi(this.shell, this.ps, baseOrg, org.getOrganization_uuid());
                         org.setApikey((String) apiKeyApi.get());
                         sub1_3Monitor.worked(1);
-                        Thread.sleep(300);
+                        Thread.sleep(200);
                     }
-                    this.orgs = organizations;
+                    this.allOrgs = orgs;
                     sub1_3Monitor.done();
                     sub1Monitor.done();
                 } catch (InterruptedException ie) {
@@ -206,8 +221,8 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
             }
             SubProgressMonitor sub2Monitor = new SubProgressMonitor(monitor, isSuperAdmin ? 70 : 100);
             monitor.subTask("各組織の監査ログを取得...");
-            sub2Monitor.beginTask("", this.orgs.size() * 100);
-            for (Organization org : this.orgs) {
+            sub2Monitor.beginTask("", this.allOrgs.size() * 100);
+            for (Organization org : this.allOrgs) {
                 if (org.isLocked()) {
                     errorOrgs.add(org);
                     sub2Monitor.worked(1);

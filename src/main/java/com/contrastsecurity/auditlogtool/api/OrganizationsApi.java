@@ -35,13 +35,17 @@ import com.google.gson.reflect.TypeToken;
 
 public class OrganizationsApi extends Api {
 
-    public OrganizationsApi(Shell shell, IPreferenceStore ps, Organization org) {
+    private int LIMIT = 10;
+    private int offset;
+
+    public OrganizationsApi(Shell shell, IPreferenceStore ps, Organization org, int offset) {
         super(shell, ps, org);
+        this.offset = offset;
     }
 
     @Override
     protected String getUrl() {
-        return String.format("%s/api/ng/superadmin/organizations", this.contrastUrl);
+        return String.format("%s/api/ng/superadmin/organizations?limit=%d&offset=%d", this.contrastUrl, LIMIT, this.offset);
     }
 
     @Override
@@ -50,6 +54,7 @@ public class OrganizationsApi extends Api {
         Type organizationsType = new TypeToken<OrganizationsJson>() {
         }.getType();
         OrganizationsJson organizationsJson = gson.fromJson(response, organizationsType);
+        this.totalCount = organizationsJson.getCount();
         this.success = Boolean.valueOf(organizationsJson.getSuccess());
         return organizationsJson.getOrganizations();
     }
