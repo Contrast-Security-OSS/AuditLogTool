@@ -106,8 +106,6 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                     sub1Monitor.subTask("SuperAdminの監査ログを取得...");
                     List<AuditLog> audits = new ArrayList<AuditLog>();
                     Api superAdminAuditApi = new SuperAdminAuditLogApi(this.shell, this.ps, baseOrg, frDetectedDate, toDetectedDate, 0);
-                    Api organizationsApi = new OrganizationsApi(this.shell, this.ps, baseOrg);
-                    Api groupsApi = new GroupsApi(this.shell, this.ps, baseOrg);
                     List<AuditLog> tmpAudits = (List<AuditLog>) superAdminAuditApi.get();
                     int totalAuditLogCount = superAdminAuditApi.getTotalCount();
                     sub1_1Monitor.beginTask("", totalAuditLogCount);
@@ -136,6 +134,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                     sub1Monitor.subTask("組織一覧を取得します...");
                     SubProgressMonitor sub1_2Monitor = new SubProgressMonitor(sub1Monitor, 10);
                     sub1_2Monitor.beginTask("", 100);
+                    Api organizationsApi = new OrganizationsApi(this.shell, this.ps, baseOrg);
                     List<Organization> organizations = (List<Organization>) organizationsApi.get();
                     sub1_2Monitor.worked(100);
                     sub1_2Monitor.done();
@@ -144,6 +143,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                         SubProgressMonitor sub1_3Monitor = new SubProgressMonitor(sub1Monitor, 20);
                         sub1Monitor.subTask("一時グループを作成しています...");
                         sub1_3Monitor.beginTask("", 100);
+                        Api groupsApi = new GroupsApi(this.shell, this.ps, baseOrg);
                         List<Group> groups = (List<Group>) groupsApi.get();
                         int groupId = -1;
                         for (Group cg : groups) {
@@ -181,6 +181,11 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                     sub1Monitor.subTask("各組織のAPI Keyを取得します...");
                     sub1_3Monitor.beginTask("", organizations.size());
                     for (Organization org : organizations) {
+                        if (org.isLocked()) {
+                            org.setRemarks("ロックされています。");
+                            sub1_3Monitor.worked(1);
+                            continue;
+                        }
                         Api apiKeyApi = new ApiKeyApi(this.shell, this.ps, baseOrg, org.getOrganization_uuid());
                         org.setApikey((String) apiKeyApi.get());
                         sub1_3Monitor.worked(1);
@@ -203,6 +208,11 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
             monitor.subTask("各組織の監査ログを取得...");
             sub2Monitor.beginTask("", this.orgs.size() * 100);
             for (Organization org : this.orgs) {
+                if (org.isLocked()) {
+                    errorOrgs.add(org);
+                    sub2Monitor.worked(1);
+                    continue;
+                }
                 sub2Monitor.subTask(String.format("各組織の監査ログを取得...%s", org.getName()));
                 try {
                     SubProgressMonitor sub2_1Monitor = new SubProgressMonitor(sub2Monitor, 100);
@@ -212,6 +222,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
                     auditApi.setIgnoreStatusCodes(new ArrayList(Arrays.asList(401, 403)));
                     Object rtnObj = auditApi.get();
                     if (rtnObj == null) {
+                        org.setRemarks("権限が足りないようです。");
                         errorOrgs.add(org);
                         continue;
                     }

@@ -527,8 +527,8 @@ public class Main implements PropertyChangeListener {
                     auditLogCount.setText(String.format("%d/%d", filteredAuditLogs.size(), auditLogs.size()));
                     List<Organization> errorOrgs = progress.getErrorOrgs();
                     if (!errorOrgs.isEmpty()) {
-                        String errorOrgsStr = errorOrgs.stream().map(org -> org.getName()).collect(Collectors.joining("\r\n", "- ", ""));
-                        MessageDialog.openWarning(shell, "監査ログ一覧の取得", String.format("監査ログを取得しましたが、一部の組織では監査ログを取得できていません。権限やグループの設定などご確認ください。\r\n%s", errorOrgsStr));
+                        String errorOrgsStr = errorOrgs.stream().map(org -> String.format("- %s %s", org.getName(), org.getRemarks())).collect(Collectors.joining("\r\n"));
+                        MessageDialog.openWarning(shell, "監査ログ一覧の取得", String.format("監査ログを取得しましたが、一部の組織では監査ログを取得できていません。\r\n%s", errorOrgsStr));
                     } else {
                         MessageDialog.openInformation(shell, "監査ログ一覧の取得", "監査ログを取得しました。");
                     }

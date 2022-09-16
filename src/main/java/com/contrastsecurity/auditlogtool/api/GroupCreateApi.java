@@ -59,7 +59,9 @@ public class GroupCreateApi extends Api {
         MediaType mediaTypeJson = MediaType.parse("application/json; charset=UTF-8");
         StringJoiner scopes = new StringJoiner(",");
         for (Organization org : this.orgs) {
-            scopes.add(String.format("{\"org\":{\"id\":\"%s\",\"role\":\"admin\"},\"app\":{\"exceptions\":[]}}", org.getOrganization_uuid()));
+            if (!org.isLocked()) {
+                scopes.add(String.format("{\"org\":{\"id\":\"%s\",\"role\":\"admin\"},\"app\":{\"exceptions\":[]}}", org.getOrganization_uuid()));
+            }
         }
         String json = String.format("{\"name\":\"%s\",\"users\":[\"%s\"],\"scopes\":[%s]}", groupName, this.userName, scopes);
         return RequestBody.create(json, mediaTypeJson);

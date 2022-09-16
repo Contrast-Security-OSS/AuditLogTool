@@ -30,6 +30,8 @@ public class Organization {
     private String name;
     private String organization_uuid;
     private String apikey;
+    private boolean locked;
+    private String remarks;
     private boolean valid;
 
     public String getName() {
@@ -54,6 +56,22 @@ public class Organization {
 
     public void setApikey(String apikey) {
         this.apikey = apikey;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public boolean isValid() {
