@@ -735,7 +735,7 @@ public class Main implements PropertyChangeListener {
                     MessageDialog.openInformation(shell, "監査ログフィルター", "監査ログ一覧を読み込んでください。");
                     return;
                 }
-                AuditFilterDialog filterDialog = new AuditFilterDialog(shell, auditLogFilterMap);
+                AuditLogFilterDialog filterDialog = new AuditLogFilterDialog(shell, auditLogFilterMap);
                 filterDialog.addPropertyChangeListener(shell.getMain());
                 int result = filterDialog.open();
                 if (IDialogConstants.OK_ID != result) {

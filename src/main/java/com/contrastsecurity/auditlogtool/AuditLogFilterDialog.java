@@ -57,7 +57,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.contrastsecurity.auditlogtool.model.Filter;
 
-public class AuditFilterDialog extends Dialog {
+public class AuditLogFilterDialog extends Dialog {
 
     private Map<FilterEnum, Set<Filter>> filterMap;
     private CheckboxTableViewer orgNameViewer;
@@ -66,7 +66,7 @@ public class AuditFilterDialog extends Dialog {
     private Text messageExcludeFilter;
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public AuditFilterDialog(Shell parentShell, Map<FilterEnum, Set<Filter>> filterMap) {
+    public AuditLogFilterDialog(Shell parentShell, Map<FilterEnum, Set<Filter>> filterMap) {
         super(parentShell);
         this.filterMap = filterMap;
     }
