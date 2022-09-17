@@ -457,7 +457,7 @@ public class Main implements PropertyChangeListener {
                 if (!auditLogTermPeriod.getSelection()) {
                     return;
                 }
-                FilterLastDetectedDialog filterDialog = new FilterLastDetectedDialog(shell, frCreatedDate, toCreatedDate);
+                FilterCreatedDateDialog filterDialog = new FilterCreatedDateDialog(shell, frCreatedDate, toCreatedDate);
                 int result = filterDialog.open();
                 if (IDialogConstants.OK_ID != result) {
                     auditLogLoadBtn.setFocus();

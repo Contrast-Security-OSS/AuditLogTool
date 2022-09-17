@@ -45,7 +45,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class FilterLastDetectedDialog extends Dialog {
+public class FilterCreatedDateDialog extends Dialog {
 
     private DateTime frCalendar;
     private DateTime toCalendar;
@@ -56,7 +56,7 @@ public class FilterLastDetectedDialog extends Dialog {
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd(E)");
     private Calendar cal = Calendar.getInstance();
 
-    public FilterLastDetectedDialog(Shell parentShell, Date frDate, Date toDate) {
+    public FilterCreatedDateDialog(Shell parentShell, Date frDate, Date toDate) {
         super(parentShell);
         this.frDate = frDate;
         this.toDate = toDate;
