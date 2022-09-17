@@ -857,24 +857,6 @@ public class Main implements PropertyChangeListener {
         return ps;
     }
 
-    public Organization getValidOrganization() {
-        String orgJsonStr = ps.getString(PreferenceConstants.TARGET_ORGS);
-        if (orgJsonStr.trim().length() > 0) {
-            try {
-                List<Organization> orgList = new Gson().fromJson(orgJsonStr, new TypeToken<List<Organization>>() {
-                }.getType());
-                for (Organization org : orgList) {
-                    if (org != null && org.isValid()) {
-                        return org;
-                    }
-                }
-            } catch (JsonSyntaxException e) {
-                return null;
-            }
-        }
-        return null;
-    }
-
     public List<Organization> getValidOrganizations() {
         List<Organization> orgs = new ArrayList<Organization>();
         String orgJsonStr = ps.getString(PreferenceConstants.TARGET_ORGS);
