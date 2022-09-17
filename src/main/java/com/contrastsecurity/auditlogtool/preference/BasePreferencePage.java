@@ -81,6 +81,8 @@ public class BasePreferencePage extends PreferencePage {
     private Table table;
     private Button addBtn;
     private Button rmvBtn;
+    private Button bulkOnBtn;
+    private Button bulkOffBtn;
     private AuditLogToolShell shell;
 
     Logger logger = LogManager.getLogger("auditlogtool");
@@ -319,41 +321,6 @@ public class BasePreferencePage extends PreferencePage {
             groupCreateNo.setSelection(true);
         }
 
-        // groupCreateYes.addSelectionListener(new SelectionAdapter() {
-        // @Override
-        // public void widgetSelected(SelectionEvent e) {
-        // Button source = (Button) e.getSource();
-        // if (source.getSelection()) {
-        // groupNameTxt.setEnabled(true);
-        // }
-        // }
-        // });
-        //
-        // groupCreateNo.addSelectionListener(new SelectionAdapter() {
-        // @Override
-        // public void widgetSelected(SelectionEvent e) {
-        // Button source = (Button) e.getSource();
-        // if (source.getSelection()) {
-        // groupNameTxt.setEnabled(false);
-        // }
-        // }
-        // });
-
-        // apiKeyTxt.addModifyListener(new ModifyListener() {
-        // @Override
-        // public void modifyText(ModifyEvent e) {
-        // String contrastUrlStr = contrastUrlTxt.getText();
-        // String serviceKeyStr = serviceKeyTxt.getText();
-        // String userNameStr = userNameTxt.getText();
-        // String apiKeyStr = apiKeyTxt.getText();
-        // if (contrastUrlStr.isEmpty() || serviceKeyStr.isEmpty() || userNameStr.isEmpty() || apiKeyStr.isEmpty()) {
-        // addBtn.setEnabled(false);
-        // } else {
-        // addBtn.setEnabled(true);
-        // }
-        // }
-        // });
-
         Composite comp2 = new Composite(stackComposite, SWT.NONE);
         GridLayout comp2Lt = new GridLayout(1, false);
         comp2Lt.marginWidth = 0;
@@ -545,6 +512,39 @@ public class BasePreferencePage extends PreferencePage {
                             selectedIdxes.add(checkBoxList.indexOf(button));
                         }
                     }
+                }
+            }
+        });
+
+        bulkOnBtn = new Button(orgButtonGrp, SWT.NULL);
+        bulkOnBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        bulkOnBtn.setText("全てOn");
+        bulkOnBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                for (Organization org : orgList) {
+                    org.setValid(true);
+                }
+                selectedIdxes.clear();
+                for (Button button : checkBoxList) {
+                    button.setSelection(true);
+                    selectedIdxes.add(checkBoxList.indexOf(button));
+                }
+            }
+        });
+
+        bulkOnBtn = new Button(orgButtonGrp, SWT.NULL);
+        bulkOnBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        bulkOnBtn.setText("全てOff");
+        bulkOnBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                for (Organization org : orgList) {
+                    org.setValid(false);
+                }
+                selectedIdxes.clear();
+                for (Button button : checkBoxList) {
+                    button.setSelection(false);
                 }
             }
         });
