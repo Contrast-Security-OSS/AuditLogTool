@@ -241,7 +241,7 @@ public class AuditLogGetWithProgress implements IRunnableWithProgress {
                         Api apiKeyApi = new ApiKeyApi(this.shell, this.ps, baseOrg, org.getOrganization_uuid());
                         org.setApikey((String) apiKeyApi.get());
                         sub1_3Monitor.worked(1);
-                        Thread.sleep(200);
+                        Thread.sleep(100);
                     }
                     this.allOrgs = orgs;
                     sub1_3Monitor.done();
