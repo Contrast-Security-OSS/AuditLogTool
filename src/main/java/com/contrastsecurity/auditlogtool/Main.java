@@ -507,7 +507,7 @@ public class Main implements PropertyChangeListener {
                     MessageDialog.openError(shell, "監査ログ一覧の取得", "取得期間を設定してください。");
                     return;
                 }
-                AuditLogsGetWithProgress progress = new AuditLogsGetWithProgress(shell, ps, getValidOrganizations(), frToDate[0], frToDate[1]);
+                AuditLogGetWithProgress progress = new AuditLogGetWithProgress(shell, ps, getValidOrganizations(), frToDate[0], frToDate[1]);
                 ProgressMonitorDialog progDialog = new AuditLogGetProgressMonitorDialog(shell);
                 try {
                     progDialog.run(true, true, progress);

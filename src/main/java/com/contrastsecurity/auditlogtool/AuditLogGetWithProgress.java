@@ -57,7 +57,7 @@ import com.contrastsecurity.auditlogtool.model.Group;
 import com.contrastsecurity.auditlogtool.model.Organization;
 import com.contrastsecurity.auditlogtool.preference.PreferenceConstants;
 
-public class AuditLogsGetWithProgress implements IRunnableWithProgress {
+public class AuditLogGetWithProgress implements IRunnableWithProgress {
 
     private Shell shell;
     private PreferenceStore ps;
@@ -72,7 +72,7 @@ public class AuditLogsGetWithProgress implements IRunnableWithProgress {
 
     Logger logger = LogManager.getLogger("auditlogtool");
 
-    public AuditLogsGetWithProgress(Shell shell, PreferenceStore ps, List<Organization> orgs, Date frDate, Date toDate) {
+    public AuditLogGetWithProgress(Shell shell, PreferenceStore ps, List<Organization> orgs, Date frDate, Date toDate) {
         this.shell = shell;
         this.ps = ps;
         this.allOrgs = orgs;
