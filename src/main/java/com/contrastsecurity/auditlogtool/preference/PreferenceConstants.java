@@ -32,7 +32,6 @@ public class PreferenceConstants {
     public static final String IS_SUPERADMIN = new String("com.contrastsecurity.auditlogtool.is_superadmin");
     public static final String IS_CREATEGROUP = new String("com.contrastsecurity.auditlogtool.is_creategroup");
     public static final String GROUP_NAME = new String("com.contrastsecurity.auditlogtool.group_name");
-    public static final String SHOW_CREATEGROUP_LOG = new String("com.contrastsecurity.auditlogtool.show_creategroup_log");
     public static final String TARGET_ORGS = new String("com.contrastsecurity.auditlogtool.target_orgs");
 
     public static final String PROXY_YUKO = new String("com.contrastsecurity.auditlogtool.proxy_yuko");

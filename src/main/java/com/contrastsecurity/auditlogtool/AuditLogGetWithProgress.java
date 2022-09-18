@@ -68,6 +68,7 @@ public class AuditLogGetWithProgress implements IRunnableWithProgress {
     private List<Organization> errorOrgs;
     private Set<Filter> organicationFilterSet = new LinkedHashSet<Filter>();
     private Set<Filter> userNameFilterSet = new LinkedHashSet<Filter>();
+    private Set<Filter> otherFilterSet = new LinkedHashSet<Filter>();
     private int addedGroupId;
 
     Logger logger = LogManager.getLogger("auditlogtool");
@@ -333,16 +334,6 @@ public class AuditLogGetWithProgress implements IRunnableWithProgress {
     }
 
     public List<AuditLog> getAllAuditLogs() {
-        if (!this.ps.getBoolean(PreferenceConstants.SHOW_CREATEGROUP_LOG)) {
-            String groupName = this.ps.getString(PreferenceConstants.GROUP_NAME);
-            List<AuditLog> hideAuditLogs = new ArrayList<AuditLog>();
-            for (AuditLog auditLog : this.allAuditLogs) {
-                if (!auditLog.getMessage().contains(groupName)) {
-                    hideAuditLogs.add(auditLog);
-                }
-            }
-            return hideAuditLogs;
-        }
         return this.allAuditLogs;
     }
 
@@ -362,6 +353,11 @@ public class AuditLogGetWithProgress implements IRunnableWithProgress {
         Map<FilterEnum, Set<Filter>> filterMap = new HashMap<FilterEnum, Set<Filter>>();
         filterMap.put(FilterEnum.ORG_NAME, organicationFilterSet);
         filterMap.put(FilterEnum.USER_NAME, userNameFilterSet);
+        // 一時グループに関するフィルタ
+        Filter tempGroupFilter = new Filter("NONAME");
+        tempGroupFilter.setValid(false);
+        otherFilterSet.add(tempGroupFilter);
+        filterMap.put(FilterEnum.TEMP_GROUP_LOG, otherFilterSet);
         return filterMap;
     }
 

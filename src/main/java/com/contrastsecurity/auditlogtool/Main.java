@@ -198,7 +198,6 @@ public class Main implements PropertyChangeListener {
             this.ps.setDefault(PreferenceConstants.IS_SUPERADMIN, "true");
             this.ps.setDefault(PreferenceConstants.IS_CREATEGROUP, "false");
             this.ps.setDefault(PreferenceConstants.GROUP_NAME, "GgHTWED8kZdQU76c");
-            this.ps.setDefault(PreferenceConstants.SHOW_CREATEGROUP_LOG, "false");
             this.ps.setDefault(PreferenceConstants.PROXY_AUTH, "none");
             this.ps.setDefault(PreferenceConstants.CONNECTION_TIMEOUT, 3000);
             this.ps.setDefault(PreferenceConstants.SOCKET_TIMEOUT, 3000);
@@ -519,8 +518,13 @@ public class Main implements PropertyChangeListener {
                             return e2.getDate().compareTo(e1.getDate());
                         }
                     });
-                    filteredAuditLogs.addAll(auditLogs);
+                    String groupName = ps.getString(PreferenceConstants.GROUP_NAME);
                     for (AuditLog auditLog : auditLogs) {
+                        if (!auditLog.getMessage().contains(groupName)) {
+                            filteredAuditLogs.add(auditLog);
+                        }
+                    }
+                    for (AuditLog auditLog : filteredAuditLogs) {
                         addColToAuditLogTable(auditLog, -1);
                     }
                     auditLogFilterMap = progress.getFilterMap();
@@ -1099,6 +1103,10 @@ public class Main implements PropertyChangeListener {
             if (!msgExcludeSet.isEmpty()) {
                 keywordExclude = msgExcludeSet.iterator().next().getLabel();
             }
+            // 一時グループ
+            String tempGroupName = this.ps.getString(PreferenceConstants.GROUP_NAME);
+            boolean tempGroupShowFlg = filterMap.get(FilterEnum.TEMP_GROUP_LOG).iterator().next().isValid();
+            System.out.println(tempGroupShowFlg);
             for (AuditLog auditLog : auditLogs) {
                 boolean lostFlg = false;
                 // 組織名
@@ -1131,6 +1139,10 @@ public class Main implements PropertyChangeListener {
                 }
                 // メッセージ含まない
                 if (!keywordExclude.isEmpty() && StringUtils.containsIgnoreCase(auditLog.getMessage(), keywordExclude)) {
+                    lostFlg |= true;
+                }
+                // 一時グループ
+                if (!tempGroupShowFlg && auditLog.getMessage().contains(tempGroupName)) {
                     lostFlg |= true;
                 }
                 if (!lostFlg) {

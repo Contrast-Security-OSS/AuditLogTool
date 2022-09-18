@@ -64,6 +64,7 @@ public class AuditLogFilterDialog extends Dialog {
     private CheckboxTableViewer userNameViewer;
     private Text messageIncludeFilter;
     private Text messageExcludeFilter;
+    private Button showTempGroupLogFlg;
     private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public AuditLogFilterDialog(Shell parentShell, Map<FilterEnum, Set<Filter>> filterMap) {
@@ -337,6 +338,30 @@ public class AuditLogFilterDialog extends Dialog {
         });
         new Label(messageGrp, SWT.LEFT).setText("を含まない");
 
+        // #################### 一時グループ #################### //
+        Group tempGroupLogGrp = new Group(composite, SWT.NONE);
+        GridLayout tempGroupLogGrpLt = new GridLayout(1, false);
+        tempGroupLogGrpLt.marginWidth = 10;
+        tempGroupLogGrpLt.marginHeight = 10;
+        tempGroupLogGrp.setLayout(tempGroupLogGrpLt);
+        GridData tempGroupLogGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
+        tempGroupLogGrpGrDt.horizontalSpan = 2;
+        tempGroupLogGrp.setLayoutData(tempGroupLogGrpGrDt);
+        tempGroupLogGrp.setText("その他");
+
+        showTempGroupLogFlg = new Button(tempGroupLogGrp, SWT.CHECK);
+        GridData showCreateGroupLogFlgGrDt = new GridData(GridData.FILL_HORIZONTAL);
+        showCreateGroupLogFlgGrDt.horizontalSpan = 2;
+        showTempGroupLogFlg.setLayoutData(showCreateGroupLogFlgGrDt);
+        showTempGroupLogFlg.setText("このツールによる一時作成グループに関するログ");
+        showTempGroupLogFlg.setSelection(filterMap.get(FilterEnum.TEMP_GROUP_LOG).iterator().next().isValid());
+        showTempGroupLogFlg.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                checkStateUpdate();
+            }
+        });
+
         return composite;
     }
 
@@ -376,6 +401,11 @@ public class AuditLogFilterDialog extends Dialog {
         Set<Filter> msgExcludeFilterSet = new LinkedHashSet<Filter>();
         msgExcludeFilterSet.add(new Filter(messageExcludeFilter.getText()));
         filterMap.put(FilterEnum.MESSAGE_EXCLUDE, msgExcludeFilterSet);
+        // 一時グループ
+        Filter tempGroupFilter = new Filter("NONAME");
+        tempGroupFilter.setValid(showTempGroupLogFlg.getSelection());
+        filterMap.get(FilterEnum.TEMP_GROUP_LOG).clear();
+        filterMap.get(FilterEnum.TEMP_GROUP_LOG).add(tempGroupFilter);
 
         support.firePropertyChange("auditFilter", null, filterMap);
     }

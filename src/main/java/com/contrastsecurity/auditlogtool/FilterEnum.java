@@ -27,5 +27,6 @@ public enum FilterEnum {
     ORG_NAME,
     USER_NAME,
     MESSAGE_INCLUDE,
-    MESSAGE_EXCLUDE;
+    MESSAGE_EXCLUDE,
+    TEMP_GROUP_LOG;
 }

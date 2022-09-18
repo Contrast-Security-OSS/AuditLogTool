@@ -73,7 +73,6 @@ public class BasePreferencePage extends PreferencePage {
     private Button groupCreateYes;
     private Button groupCreateNo;
     private Text groupNameTxt;
-    private Button showCreateGroupLogFlg;
 
     private List<Organization> orgList;
     private List<Button> checkBoxList = new ArrayList<Button>();
@@ -306,15 +305,6 @@ public class BasePreferencePage extends PreferencePage {
         showGroupCreateTypeGrpGrDt.horizontalSpan = 2;
         showGroupCreateTypeGrp.setLayoutData(showGroupCreateTypeGrpGrDt);
 
-        showCreateGroupLogFlg = new Button(showGroupCreateTypeGrp, SWT.CHECK);
-        GridData showCreateGroupLogFlgGrDt = new GridData(GridData.FILL_HORIZONTAL);
-        showCreateGroupLogFlgGrDt.horizontalSpan = 2;
-        showCreateGroupLogFlg.setLayoutData(showCreateGroupLogFlgGrDt);
-        showCreateGroupLogFlg.setText("グループの一時作成に関するログを表示する");
-        if (ps.getBoolean(PreferenceConstants.SHOW_CREATEGROUP_LOG)) {
-            showCreateGroupLogFlg.setSelection(true);
-        }
-
         if (ps.getBoolean(PreferenceConstants.IS_CREATEGROUP)) {
             groupCreateYes.setSelection(true);
         } else {
@@ -533,10 +523,10 @@ public class BasePreferencePage extends PreferencePage {
             }
         });
 
-        bulkOnBtn = new Button(orgButtonGrp, SWT.NULL);
-        bulkOnBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        bulkOnBtn.setText("全てOff");
-        bulkOnBtn.addSelectionListener(new SelectionAdapter() {
+        bulkOffBtn = new Button(orgButtonGrp, SWT.NULL);
+        bulkOffBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        bulkOffBtn.setText("全てOff");
+        bulkOffBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 for (Organization org : orgList) {
@@ -592,7 +582,6 @@ public class BasePreferencePage extends PreferencePage {
                     groupCreateNo.setSelection(true);
                 }
                 groupNameTxt.setText(ps.getDefaultString(PreferenceConstants.GROUP_NAME));
-                showCreateGroupLogFlg.setSelection(ps.getDefaultBoolean(PreferenceConstants.SHOW_CREATEGROUP_LOG));
             }
         });
 
@@ -655,7 +644,6 @@ public class BasePreferencePage extends PreferencePage {
             ps.setValue(PreferenceConstants.IS_CREATEGROUP, "false");
         }
         ps.setValue(PreferenceConstants.GROUP_NAME, this.groupNameTxt.getText());
-        ps.setValue(PreferenceConstants.SHOW_CREATEGROUP_LOG, this.showCreateGroupLogFlg.getSelection());
         ps.setValue(PreferenceConstants.TARGET_ORGS, new Gson().toJson(this.orgList));
         if (!errors.isEmpty()) {
             MessageDialog.openError(getShell(), "基本設定", String.join("\r\n", errors));
