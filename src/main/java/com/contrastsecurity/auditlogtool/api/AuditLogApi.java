@@ -38,16 +38,16 @@ public abstract class AuditLogApi extends Api {
     protected Date startDate;
     protected Date endDate;
     protected int offset;
-    protected final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    protected final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    protected final Pattern userPtn0 = Pattern.compile("Users .+ added to .+ Access Group (\\S+)");
-    protected final Pattern userPtn1 = Pattern.compile("Users? (\\S+) .+$");
-    protected final Pattern userPtn2 = Pattern.compile(" -  (\\S+) .+ was logged out due to inactivity\\.$");
-    protected final Pattern userPtn3 = Pattern.compile(" -  (\\S+) .+ was logged out due to exceeding absolute timeout\\.$");
-    protected final Pattern userPtn4 = Pattern.compile(" -  (\\S+) .+ successfully logged out\\.$");
-    protected final Pattern userPtn5 = Pattern.compile("\\[(\\S+) impersonating .+$");
-    protected final Pattern userPtn6 = Pattern.compile(" by (\\S+).+$");
-    protected final Pattern userPtn7 = Pattern.compile("(\\S+) toggle to admin");
+    protected final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); //$NON-NLS-1$
+    protected final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); //$NON-NLS-1$
+    protected final Pattern userPtn0 = Pattern.compile("Users .+ added to .+ Access Group (\\S+)"); //$NON-NLS-1$
+    protected final Pattern userPtn1 = Pattern.compile("Users? (\\S+) .+$"); //$NON-NLS-1$
+    protected final Pattern userPtn2 = Pattern.compile(" -  (\\S+) .+ was logged out due to inactivity\\.$"); //$NON-NLS-1$
+    protected final Pattern userPtn3 = Pattern.compile(" -  (\\S+) .+ was logged out due to exceeding absolute timeout\\.$"); //$NON-NLS-1$
+    protected final Pattern userPtn4 = Pattern.compile(" -  (\\S+) .+ successfully logged out\\.$"); //$NON-NLS-1$
+    protected final Pattern userPtn5 = Pattern.compile("\\[(\\S+) impersonating .+$"); //$NON-NLS-1$
+    protected final Pattern userPtn6 = Pattern.compile(" by (\\S+).+$"); //$NON-NLS-1$
+    protected final Pattern userPtn7 = Pattern.compile("(\\S+) toggle to admin"); //$NON-NLS-1$
 
     public AuditLogApi(Shell shell, IPreferenceStore ps, Organization org, Date startDate, Date endDate, int offset) {
         super(shell, ps, org);

@@ -52,6 +52,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.jasypt.util.text.BasicTextEncryptor;
 
 import com.contrastsecurity.auditlogtool.Main;
+import com.contrastsecurity.auditlogtool.Messages;
 import com.contrastsecurity.auditlogtool.exception.ApiException;
 import com.contrastsecurity.auditlogtool.exception.NonApiException;
 import com.contrastsecurity.auditlogtool.model.Organization;
@@ -74,7 +75,7 @@ public abstract class Api {
         DELETE
     }
 
-    Logger logger = LogManager.getLogger("auditlogtool");
+    Logger logger = LogManager.getLogger("auditlogtool"); //$NON-NLS-1$
 
     protected Shell shell;
     protected IPreferenceStore ps;
@@ -140,11 +141,11 @@ public abstract class Api {
     protected List<Header> getHeaders() {
         List<Header> headers = new ArrayList<Header>();
         String apiKey = this.org.getApikey();
-        String auth = String.format("%s:%s", this.userName, this.serviceKey);
+        String auth = String.format("%s:%s", this.userName, this.serviceKey); //$NON-NLS-1$
         byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.ISO_8859_1));
         String authHeader = new String(encodedAuth);
-        headers.add(new BasicHeader(HttpHeaders.ACCEPT, "application/json"));
-        headers.add(new BasicHeader("API-Key", apiKey));
+        headers.add(new BasicHeader(HttpHeaders.ACCEPT, "application/json")); //$NON-NLS-1$
+        headers.add(new BasicHeader("API-Key", apiKey)); //$NON-NLS-1$
         headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION, authHeader));
         return headers;
     }
@@ -184,7 +185,7 @@ public abstract class Api {
             clientBuilder.readTimeout(sockettTimeout, TimeUnit.MILLISECONDS).connectTimeout(connectTimeout, TimeUnit.MILLISECONDS);
 
             if (this.ps.getBoolean(PreferenceConstants.IGNORE_SSLCERT_CHECK)) {
-                SSLContext sslContext = SSLContext.getInstance("SSL");
+                SSLContext sslContext = SSLContext.getInstance("SSL"); //$NON-NLS-1$
                 TrustManager[] trustAllCerts = getTrustManager();
                 sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
                 SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
@@ -200,16 +201,16 @@ public abstract class Api {
             if (this.ps.getBoolean(PreferenceConstants.PROXY_YUKO)) {
                 clientBuilder.proxy(new Proxy(Proxy.Type.HTTP,
                         new InetSocketAddress(this.ps.getString(PreferenceConstants.PROXY_HOST), Integer.parseInt(this.ps.getString(PreferenceConstants.PROXY_PORT)))));
-                if (!this.ps.getString(PreferenceConstants.PROXY_AUTH).equals("none")) {
+                if (!this.ps.getString(PreferenceConstants.PROXY_AUTH).equals("none")) { //$NON-NLS-1$
                     Authenticator proxyAuthenticator = null;
                     // プロキシ認証あり
-                    if (this.ps.getString(PreferenceConstants.PROXY_AUTH).equals("input")) {
+                    if (this.ps.getString(PreferenceConstants.PROXY_AUTH).equals("input")) { //$NON-NLS-1$
                         proxyAuthenticator = new Authenticator() {
 
                             @Override
                             public Request authenticate(Route route, Response response) throws IOException {
                                 String credential = Credentials.basic(ps.getString(PreferenceConstants.PROXY_TMP_USER), ps.getString(PreferenceConstants.PROXY_TMP_PASS));
-                                return response.request().newBuilder().header("Proxy-Authorization", credential).build();
+                                return response.request().newBuilder().header("Proxy-Authorization", credential).build(); //$NON-NLS-1$
                             }
                         };
                     } else {
@@ -222,11 +223,11 @@ public abstract class Api {
                                 @Override
                                 public Request authenticate(Route route, Response response) throws IOException {
                                     String credential = Credentials.basic(ps.getString(PreferenceConstants.PROXY_USER), proxy_pass);
-                                    return response.request().newBuilder().header("Proxy-Authorization", credential).build();
+                                    return response.request().newBuilder().header("Proxy-Authorization", credential).build(); //$NON-NLS-1$
                                 }
                             };
                         } catch (Exception e) {
-                            throw new ApiException("プロキシパスワードの復号化に失敗しました。\\r\\nパスワードの設定をやり直してください。");
+                            throw new ApiException(Messages.getString("Api.proxy_password_decrypt_fail_message")); //$NON-NLS-1$
                         }
                     }
                     clientBuilder.proxyAuthenticator(proxyAuthenticator);

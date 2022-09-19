@@ -53,9 +53,9 @@ public class SuperAdminAuditLogApi extends AuditLogApi {
         if (this.startDate != null && this.endDate != null) {
             String fr = sdf.format(this.startDate);
             String to = sdf.format(this.endDate);
-            return String.format("%s/api/ng/superadmin/security/audit-logs?startDate=%s&endDate=%s&limit=%d&offset=%d", this.contrastUrl, fr, to, limit, this.offset);
+            return String.format("%s/api/ng/superadmin/security/audit-logs?startDate=%s&endDate=%s&limit=%d&offset=%d", this.contrastUrl, fr, to, limit, this.offset); //$NON-NLS-1$
         } else {
-            return String.format("%s/api/ng/superadmin/security/audit-logs?limit=%d&offset=%d", this.contrastUrl, limit, this.offset);
+            return String.format("%s/api/ng/superadmin/security/audit-logs?limit=%d&offset=%d", this.contrastUrl, limit, this.offset); //$NON-NLS-1$
         }
     }
 
@@ -83,7 +83,7 @@ public class SuperAdminAuditLogApi extends AuditLogApi {
             Matcher m6 = userPtn6.matcher(audit.getMessage());
             Matcher m7 = userPtn7.matcher(audit.getMessage());
             if (m1.find()) {
-                audit.setUserName(m1.group(1).replaceAll("'", ""));
+                audit.setUserName(m1.group(1).replaceAll("'", "")); //$NON-NLS-1$ //$NON-NLS-2$
             } else if (m2.find()) {
                 audit.setUserName(m2.group(1));
             } else if (m3.find()) {
@@ -93,11 +93,11 @@ public class SuperAdminAuditLogApi extends AuditLogApi {
             } else if (m5.find()) {
                 audit.setUserName(m5.group(1));
             } else if (m6.find()) {
-                audit.setUserName(m6.group(1).replaceAll("'", ""));
+                audit.setUserName(m6.group(1).replaceAll("'", "")); //$NON-NLS-1$ //$NON-NLS-2$
             } else if (m7.find()) {
-                audit.setUserName(m7.group(1).replaceAll("'", ""));
+                audit.setUserName(m7.group(1).replaceAll("'", "")); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
-                audit.setUserName("SYSTEM");
+                audit.setUserName("SYSTEM"); //$NON-NLS-1$
             }
         }
         return audits;

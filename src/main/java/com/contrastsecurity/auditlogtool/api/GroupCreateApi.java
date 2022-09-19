@@ -50,20 +50,20 @@ public class GroupCreateApi extends Api {
 
     @Override
     protected String getUrl() {
-        return String.format("%s/api/ng/superadmin/ac/groups/organizational?expand=skip_links", this.contrastUrl);
+        return String.format("%s/api/ng/superadmin/ac/groups/organizational?expand=skip_links", this.contrastUrl); //$NON-NLS-1$
     }
 
     @Override
     protected RequestBody getBody() throws Exception {
         String groupName = this.ps.getString(PreferenceConstants.GROUP_NAME);
-        MediaType mediaTypeJson = MediaType.parse("application/json; charset=UTF-8");
-        StringJoiner scopes = new StringJoiner(",");
+        MediaType mediaTypeJson = MediaType.parse("application/json; charset=UTF-8"); //$NON-NLS-1$
+        StringJoiner scopes = new StringJoiner(","); //$NON-NLS-1$
         for (Organization org : this.orgs) {
             if (!org.isLocked()) {
-                scopes.add(String.format("{\"org\":{\"id\":\"%s\",\"role\":\"admin\"},\"app\":{\"exceptions\":[]}}", org.getOrganization_uuid()));
+                scopes.add(String.format("{\"org\":{\"id\":\"%s\",\"role\":\"admin\"},\"app\":{\"exceptions\":[]}}", org.getOrganization_uuid())); //$NON-NLS-1$
             }
         }
-        String json = String.format("{\"name\":\"%s\",\"users\":[\"%s\"],\"scopes\":[%s]}", groupName, this.userName, scopes);
+        String json = String.format("{\"name\":\"%s\",\"users\":[\"%s\"],\"scopes\":[%s]}", groupName, this.userName, scopes); //$NON-NLS-1$
         return RequestBody.create(json, mediaTypeJson);
     }
 
