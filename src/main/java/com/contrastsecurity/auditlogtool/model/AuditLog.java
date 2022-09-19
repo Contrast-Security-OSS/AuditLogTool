@@ -71,7 +71,7 @@ public class AuditLog {
 
     public String getUserName() {
         if (userName == null) {
-            return "";
+            return ""; //$NON-NLS-1$
         }
         return userName;
     }
@@ -99,7 +99,7 @@ public class AuditLog {
     @Override
     public String toString() {
         LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(this.date)), ZoneId.systemDefault());
-        DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
         return datetimeformatter.format(ldt);
     }
 
