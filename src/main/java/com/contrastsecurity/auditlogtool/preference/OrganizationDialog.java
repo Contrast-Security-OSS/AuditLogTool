@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.contrastsecurity.auditlogtool.AuditLogToolShell;
+import com.contrastsecurity.auditlogtool.Messages;
 import com.contrastsecurity.auditlogtool.api.Api;
 import com.contrastsecurity.auditlogtool.api.OrganizationApi;
 import com.contrastsecurity.auditlogtool.exception.ApiException;
@@ -82,7 +83,7 @@ public class OrganizationDialog extends Dialog {
     protected Control createDialogArea(Composite parent) {
         Composite composite = (Composite) super.createDialogArea(parent);
         composite.setLayout(new GridLayout(2, false));
-        new Label(composite, SWT.LEFT).setText("組織ID：");
+        new Label(composite, SWT.LEFT).setText(Messages.getString("OrganizationDialog.organization_label_title")); //$NON-NLS-1$
         orgIdTxt = new Text(composite, SWT.BORDER);
         orgIdTxt.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         orgIdTxt.addListener(SWT.FocusIn, new Listener() {
@@ -103,7 +104,7 @@ public class OrganizationDialog extends Dialog {
             }
         });
         orgIdTxt.setFocus();
-        new Label(composite, SWT.LEFT).setText("API Key：");
+        new Label(composite, SWT.LEFT).setText(Messages.getString("OrganizationDialog.apikey_label_tilte")); //$NON-NLS-1$
         apiKeyTxt = new Text(composite, SWT.BORDER);
         apiKeyTxt.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         apiKeyTxt.addListener(SWT.FocusIn, new Listener() {
@@ -147,17 +148,17 @@ public class OrganizationDialog extends Dialog {
         try {
             Organization rtnOrg = (Organization) orgApi.get();
             if (rtnOrg == null) {
-                MessageDialog.openError(getShell(), "組織の追加", "組織が見つかりません。");
+                MessageDialog.openError(getShell(), Messages.getString("OrganizationDialog.organization_add_dialog_title"), Messages.getString("OrganizationDialog.organization_add_error_notfound_organizaion")); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
                 org.setName(rtnOrg.getName());
                 this.org = org;
             }
         } catch (ApiException e) {
-            MessageDialog.openWarning(getShell(), "組織の追加", String.format("TeamServerからエラーが返されました。\r\n%s", e.getMessage()));
+            MessageDialog.openWarning(getShell(), Messages.getString("OrganizationDialog.organization_add_dialog_title"), String.format(Messages.getString("OrganizationDialog.organization_add_error_teamserver_error"), e.getMessage())); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (NonApiException e) {
-            MessageDialog.openError(getShell(), "組織の追加", String.format("想定外のステータスコード: %s\r\nログファイルをご確認ください。", e.getMessage()));
+            MessageDialog.openError(getShell(), Messages.getString("OrganizationDialog.organization_add_dialog_title"), String.format(Messages.getString("OrganizationDialog.organization_add_error_unexpected"), e.getMessage())); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (Exception e) {
-            MessageDialog.openError(getShell(), "組織の追加", String.format("不明なエラーです。ログファイルをご確認ください。\r\n%s", e.getMessage()));
+            MessageDialog.openError(getShell(), Messages.getString("OrganizationDialog.organization_add_dialog_title"), String.format(Messages.getString("OrganizationDialog.organization_add_error_unknown"), e.getMessage())); //$NON-NLS-1$ //$NON-NLS-2$
         }
         super.okPressed();
     }
@@ -175,6 +176,6 @@ public class OrganizationDialog extends Dialog {
     @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
-        newShell.setText("組織の追加");
+        newShell.setText(Messages.getString("OrganizationDialog.organization_add_dialog_title")); //$NON-NLS-1$
     }
 }
