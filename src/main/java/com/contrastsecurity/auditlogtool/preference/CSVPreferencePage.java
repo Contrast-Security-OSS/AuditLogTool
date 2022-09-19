@@ -41,12 +41,14 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.contrastsecurity.auditlogtool.Messages;
+
 public class CSVPreferencePage extends PreferencePage {
 
     private Text evtCSVFileFmtTxt;
 
     public CSVPreferencePage() {
-        super("CSV出力設定");
+        super(Messages.getString("CSVPreferencePage.csv_output_settings_group_title")); //$NON-NLS-1$
     }
 
     @Override
@@ -71,7 +73,7 @@ public class CSVPreferencePage extends PreferencePage {
         GridData csvFileFmtGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         // csvFileFmtGrpGrDt.horizontalSpan = 2;
         csvFileFmtGrp.setLayoutData(csvFileFmtGrpGrDt);
-        csvFileFmtGrp.setText("CSV出力ファイルフォーマット（フォルダ名にも適用されます）");
+        csvFileFmtGrp.setText(Messages.getString("CSVPreferencePage.csv_output_fileformat")); //$NON-NLS-1$
 
         Group evtCSVFileFmtGrp = new Group(csvFileFmtGrp, SWT.NONE);
         GridLayout evtCSVFileFmtGrpLt = new GridLayout(1, false);
@@ -82,7 +84,7 @@ public class CSVPreferencePage extends PreferencePage {
         GridData evtCSVFileFmtGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         // evtCSVFileFmtGrpGrDt.horizontalSpan = 2;
         evtCSVFileFmtGrp.setLayoutData(evtCSVFileFmtGrpGrDt);
-        evtCSVFileFmtGrp.setText("監査ログ");
+        evtCSVFileFmtGrp.setText(Messages.getString("CSVPreferencePage.csv_output_fileformat_group_title")); //$NON-NLS-1$
 
         evtCSVFileFmtTxt = new Text(evtCSVFileFmtGrp, SWT.BORDER);
         evtCSVFileFmtTxt.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -92,7 +94,7 @@ public class CSVPreferencePage extends PreferencePage {
         Label csvFileFormatHint = new Label(csvFileFmtGrp, SWT.LEFT);
         GridData csvFileFormatHintGrDt = new GridData(GridData.FILL_HORIZONTAL);
         csvFileFormatHint.setLayoutData(csvFileFormatHintGrDt);
-        csvFileFormatHint.setText("※ java.text.SimpleDateFormatの書式としてください。\r\n例) 'vul_'yyyy-MM-dd_HHmmss、'lib_'yyyy-MM-dd_HHmmss");
+        csvFileFormatHint.setText(Messages.getString("CSVPreferencePage.csv_output_fileformat_description")); //$NON-NLS-1$
 
         Composite buttonGrp = new Composite(parent, SWT.NONE);
         GridLayout buttonGrpLt = new GridLayout(2, false);
@@ -109,7 +111,7 @@ public class CSVPreferencePage extends PreferencePage {
         GridData defaultBtnGrDt = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
         defaultBtnGrDt.widthHint = 90;
         defaultBtn.setLayoutData(defaultBtnGrDt);
-        defaultBtn.setText("デフォルトに戻す");
+        defaultBtn.setText(Messages.getString("CSVPreferencePage.restore_defaults_button_title")); //$NON-NLS-1$
         defaultBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -121,7 +123,7 @@ public class CSVPreferencePage extends PreferencePage {
         GridData applyBtnGrDt = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
         applyBtnGrDt.widthHint = 90;
         applyBtn.setLayoutData(applyBtnGrDt);
-        applyBtn.setText("適用");
+        applyBtn.setText(Messages.getString("CSVPreferencePage.apply_button_title")); //$NON-NLS-1$
         applyBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -142,7 +144,7 @@ public class CSVPreferencePage extends PreferencePage {
         List<String> errors = new ArrayList<String>();
         ps.setValue(PreferenceConstants.CSV_FILE_FORMAT_AUDITLOG, this.evtCSVFileFmtTxt.getText());
         if (!errors.isEmpty()) {
-            MessageDialog.openError(getShell(), "CSV出力設定", String.join("\r\n", errors));
+            MessageDialog.openError(getShell(), Messages.getString("CSVPreferencePage.csv_output_settings_group_title"), String.join("\r\n", errors)); //$NON-NLS-1$ //$NON-NLS-2$
             return false;
         }
         return true;
