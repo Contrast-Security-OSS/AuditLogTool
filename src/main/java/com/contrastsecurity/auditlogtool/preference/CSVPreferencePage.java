@@ -142,7 +142,7 @@ public class CSVPreferencePage extends PreferencePage {
         List<String> errors = new ArrayList<String>();
         ps.setValue(PreferenceConstants.CSV_FILE_FORMAT_AUDITLOG, this.evtCSVFileFmtTxt.getText());
         if (!errors.isEmpty()) {
-            MessageDialog.openError(getShell(), "その他設定", String.join("\r\n", errors));
+            MessageDialog.openError(getShell(), "CSV出力設定", String.join("\r\n", errors));
             return false;
         }
         return true;
