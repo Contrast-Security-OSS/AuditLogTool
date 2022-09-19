@@ -50,7 +50,7 @@ public class AuditLogJson extends ContrastJson {
 
     @Override
     public String toString() {
-        StringJoiner sj = new StringJoiner("\r\n");
+        StringJoiner sj = new StringJoiner("\r\n"); //$NON-NLS-1$
         for (AuditLog audit : this.logs) {
             sj.add(audit.toString());
         }
