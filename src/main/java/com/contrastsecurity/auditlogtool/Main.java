@@ -493,7 +493,7 @@ public class Main implements PropertyChangeListener {
         auditLogLoadBtnGrDt.heightHint = 50;
         auditLogLoadBtn.setLayoutData(auditLogLoadBtnGrDt);
         auditLogLoadBtn.setText("取得");
-        auditLogLoadBtn.setToolTipText("監査ログ一覧を取得します。");
+        auditLogLoadBtn.setToolTipText("監査ログを取得します。");
         auditLogLoadBtn.setFont(new Font(display, "ＭＳ ゴシック", 20, SWT.NORMAL));
         auditLogLoadBtn.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -503,7 +503,7 @@ public class Main implements PropertyChangeListener {
                 auditLogTable.removeAll();
                 Date[] frToDate = getFrToDetectedDate();
                 if (frToDate.length != 2) {
-                    MessageDialog.openError(shell, "監査ログ一覧の取得", "取得期間を設定してください。");
+                    MessageDialog.openError(shell, "監査ログの取得", "取得期間を設定してください。");
                     return;
                 }
                 AuditLogGetWithProgress progress = new AuditLogGetWithProgress(shell, ps, getValidOrganizations(), frToDate[0], frToDate[1]);
@@ -532,9 +532,9 @@ public class Main implements PropertyChangeListener {
                     List<Organization> errorOrgs = progress.getErrorOrgs();
                     if (!errorOrgs.isEmpty()) {
                         String errorOrgsStr = errorOrgs.stream().map(org -> String.format("- %s %s", org.getName(), org.getRemarks())).collect(Collectors.joining("\r\n"));
-                        MessageDialog.openWarning(shell, "監査ログ一覧の取得", String.format("監査ログを取得しましたが、一部の組織では監査ログを取得できていません。\r\n%s", errorOrgsStr));
+                        MessageDialog.openWarning(shell, "監査ログの取得", String.format("監査ログを取得しましたが、一部の組織では監査ログを取得できていません。\r\n%s", errorOrgsStr));
                     } else {
-                        MessageDialog.openInformation(shell, "監査ログ一覧の取得", "監査ログを取得しました。");
+                        MessageDialog.openInformation(shell, "監査ログの取得", "監査ログを取得しました。");
                     }
                 } catch (InvocationTargetException e) {
                     StringWriter stringWriter = new StringWriter();
@@ -544,14 +544,14 @@ public class Main implements PropertyChangeListener {
                     logger.error(trace);
                     String errorMsg = e.getTargetException().getMessage();
                     if (e.getTargetException() instanceof ApiException) {
-                        MessageDialog.openWarning(shell, "監査ログ一覧の取得", String.format("TeamServerからエラーが返されました。\r\n%s", errorMsg));
+                        MessageDialog.openWarning(shell, "監査ログの取得", String.format("TeamServerからエラーが返されました。\r\n%s", errorMsg));
                     } else if (e.getTargetException() instanceof NonApiException) {
-                        MessageDialog.openError(shell, "監査ログ一覧の取得", String.format("想定外のステータスコード: %s\r\nログファイルをご確認ください。", errorMsg));
+                        MessageDialog.openError(shell, "監査ログの取得", String.format("想定外のステータスコード: %s\r\nログファイルをご確認ください。", errorMsg));
                     } else {
-                        MessageDialog.openError(shell, "監査ログ一覧の取得", String.format("不明なエラーです。ログファイルをご確認ください。\r\n%s", errorMsg));
+                        MessageDialog.openError(shell, "監査ログの取得", String.format("不明なエラーです。ログファイルをご確認ください。\r\n%s", errorMsg));
                     }
                 } catch (InterruptedException e) {
-                    MessageDialog.openInformation(shell, "監査ログ一覧の取得", e.getMessage());
+                    MessageDialog.openInformation(shell, "監査ログの取得", e.getMessage());
                 }
             }
         });
@@ -656,7 +656,7 @@ public class Main implements PropertyChangeListener {
                     for (List<String> csvLine : csvList) {
                         printer.printRecord(csvLine);
                     }
-                    MessageDialog.openInformation(shell, "監査ログ一覧のエクスポート", "csvファイルをエクスポートしました。");
+                    MessageDialog.openInformation(shell, "監査ログのエクスポート", "csvファイルをエクスポートしました。");
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 }
@@ -736,7 +736,7 @@ public class Main implements PropertyChangeListener {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 if (auditLogFilterMap == null) {
-                    MessageDialog.openInformation(shell, "監査ログフィルター", "監査ログ一覧を読み込んでください。");
+                    MessageDialog.openInformation(shell, "監査ログフィルター", "監査ログを読み込んでください。");
                     return;
                 }
                 AuditLogFilterDialog filterDialog = new AuditLogFilterDialog(shell, auditLogFilterMap);
