@@ -45,7 +45,7 @@ public class GroupsApi extends Api {
 
     @Override
     protected String getUrl() {
-        return String.format("%s/api/ng/superadmin/ac/groups?limit=%d&offset=%d", this.contrastUrl, LIMIT, this.offset);
+        return String.format("%s/api/ng/superadmin/ac/groups?limit=%d&offset=%d", this.contrastUrl, LIMIT, this.offset); //$NON-NLS-1$
     }
 
     @Override

@@ -44,7 +44,7 @@ public class GroupDeleteApi extends Api {
 
     @Override
     protected String getUrl() {
-        return String.format("%s/api/ng/superadmin/ac/groups/%d?expand=skip_links", this.contrastUrl, this.groupId);
+        return String.format("%s/api/ng/superadmin/ac/groups/%d?expand=skip_links", this.contrastUrl, this.groupId); //$NON-NLS-1$
     }
 
     @Override
