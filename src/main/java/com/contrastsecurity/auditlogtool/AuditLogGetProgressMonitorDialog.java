@@ -12,7 +12,7 @@ public class AuditLogGetProgressMonitorDialog extends ProgressMonitorDialog {
     @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
-        newShell.setText("監査ログの取得");
+        newShell.setText(Messages.getString("AuditLogGetProgressMonitorDialog.dialog_title")); //$NON-NLS-1$
     }
 
 }
