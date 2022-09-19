@@ -57,6 +57,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.contrastsecurity.auditlogtool.AuditLogCSVColmunEnum;
+import com.contrastsecurity.auditlogtool.Messages;
 import com.contrastsecurity.auditlogtool.model.AuditLogCSVColumn;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -71,7 +72,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
     private Table table;
 
     public AuditLogCSVColumnPreferencePage() {
-        super("監査ログの出力項目");
+        super(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_settings_title")); //$NON-NLS-1$
     }
 
     @Override
@@ -96,13 +97,13 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
         GridData csvGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         // csvGrpGrDt.horizontalSpan = 2;
         csvColumnGrp.setLayoutData(csvGrpGrDt);
-        csvColumnGrp.setText("CSV出力内容の設定");
+        csvColumnGrp.setText(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_group_title")); //$NON-NLS-1$
 
         outCsvHeaderFlg = new Button(csvColumnGrp, SWT.CHECK);
         GridData outCsvHeaderFlgGrDt = new GridData(GridData.FILL_HORIZONTAL);
         outCsvHeaderFlgGrDt.horizontalSpan = 3;
         outCsvHeaderFlg.setLayoutData(outCsvHeaderFlgGrDt);
-        outCsvHeaderFlg.setText("カラムヘッダ（項目名）を出力");
+        outCsvHeaderFlg.setText(Messages.getString("AuditLogCSVColumnPreferencePage.csv_header_output_checkbox_label")); //$NON-NLS-1$
         if (ps.getBoolean(PreferenceConstants.CSV_OUT_HEADER_AUDITLOG)) {
             outCsvHeaderFlg.setSelection(true);
         }
@@ -124,7 +125,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
                     });
                 }
             } catch (JsonSyntaxException e) {
-                MessageDialog.openError(getShell(), "監査ログ出力項目の読み込み", String.format("監査ログ出力項目の内容に問題があります。\r\n%s", columnJsonStr));
+                MessageDialog.openError(getShell(), Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_settings_load_error_title"), String.format(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_settings_load_error_message"), columnJsonStr)); //$NON-NLS-1$ //$NON-NLS-2$
                 columnList = new ArrayList<AuditLogCSVColumn>();
             }
         } else {
@@ -163,16 +164,16 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
         column0.setResizable(false);
         TableColumn column1 = new TableColumn(table, SWT.CENTER);
         column1.setWidth(50);
-        column1.setText("出力");
+        column1.setText(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_checkbox_header")); //$NON-NLS-1$
         TableColumn column2 = new TableColumn(table, SWT.LEFT);
         column2.setWidth(200);
-        column2.setText("項目名");
+        column2.setText(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_fieldname_header")); //$NON-NLS-1$
         TableColumn column3 = new TableColumn(table, SWT.CENTER);
         column3.setWidth(75);
-        column3.setText("区切り文字");
+        column3.setText(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_separator_header")); //$NON-NLS-1$
         TableColumn column4 = new TableColumn(table, SWT.LEFT);
         column4.setWidth(350);
-        column4.setText("備考");
+        column4.setText(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_remarks_header")); //$NON-NLS-1$
 
         for (AuditLogCSVColumn col : columnList) {
             this.addColToTable(col, -1);
@@ -249,7 +250,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
 
         final Button allOnBtn = new Button(chkButtonGrp, SWT.NULL);
         allOnBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        allOnBtn.setText("すべてオン");
+        allOnBtn.setText(Messages.getString("AuditLogCSVColumnPreferencePage.checkbox_all_on_button_title")); //$NON-NLS-1$
         allOnBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -264,7 +265,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
 
         final Button allOffBtn = new Button(chkButtonGrp, SWT.NULL);
         allOffBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        allOffBtn.setText("すべてオフ");
+        allOffBtn.setText(Messages.getString("AuditLogCSVColumnPreferencePage.checkbox_all_off_button_title")); //$NON-NLS-1$
         allOffBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -278,7 +279,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
         });
 
         Label descLabel = new Label(csvColumnGrp, SWT.LEFT);
-        descLabel.setText("・ ドラッグアンドドロップで項目の並び替えが可能です。\r\n・ 複数の値が出力される項目については、区切り文字の変更が可能です。改行させる場合は\\r\\nをご指定してください。");
+        descLabel.setText(Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_order_draganddrop_description")); //$NON-NLS-1$
         GridData descLabelGrDt = new GridData(GridData.FILL_HORIZONTAL);
         descLabelGrDt.horizontalSpan = 3;
         descLabel.setLayoutData(descLabelGrDt);
@@ -298,7 +299,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
         GridData defaultBtnGrDt = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
         defaultBtnGrDt.widthHint = 90;
         defaultBtn.setLayoutData(defaultBtnGrDt);
-        defaultBtn.setText("デフォルトに戻す");
+        defaultBtn.setText(Messages.getString("AuditLogCSVColumnPreferencePage.restore_defaults_button_title")); //$NON-NLS-1$
         defaultBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -327,7 +328,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
         GridData applyBtnGrDt = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
         applyBtnGrDt.widthHint = 90;
         applyBtn.setLayoutData(applyBtnGrDt);
-        applyBtn.setText("適用");
+        applyBtn.setText(Messages.getString("AuditLogCSVColumnPreferencePage.apply_button_title")); //$NON-NLS-1$
         applyBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -349,7 +350,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
         ps.setValue(PreferenceConstants.CSV_OUT_HEADER_AUDITLOG, this.outCsvHeaderFlg.getSelection());
         ps.setValue(PreferenceConstants.CSV_COLUMN_AUDITLOG, new Gson().toJson(this.columnList));
         if (!errors.isEmpty()) {
-            MessageDialog.openError(getShell(), "監査ログの出力設定", String.join("\r\n", errors));
+            MessageDialog.openError(getShell(), Messages.getString("AuditLogCSVColumnPreferencePage.csv_column_settings_title"), String.join("\r\n", errors)); //$NON-NLS-1$ //$NON-NLS-2$
             return false;
         }
         return true;
@@ -408,7 +409,7 @@ public class AuditLogCSVColumnPreferencePage extends PreferencePage {
             editor2.setEditor(text, item, 3);
             separateTextList.add(text);
         } else {
-            item.setText(3, "");
+            item.setText(3, ""); //$NON-NLS-1$
             separateTextList.add(new Text(table, SWT.NONE));
         }
         item.setText(4, col.getColumn().getRemarks());
