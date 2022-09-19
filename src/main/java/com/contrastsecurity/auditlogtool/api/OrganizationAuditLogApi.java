@@ -55,9 +55,9 @@ public class OrganizationAuditLogApi extends AuditLogApi {
         if (this.startDate != null && this.endDate != null) {
             String fr = sdf.format(this.startDate);
             String to = sdf.format(this.endDate);
-            return String.format("%s/api/ng/%s/security/audit?startDate=%s&endDate=%s&limit=%d&offset=%d", this.contrastUrl, orgId, fr, to, limit, this.offset);
+            return String.format("%s/api/ng/%s/security/audit?startDate=%s&endDate=%s&limit=%d&offset=%d", this.contrastUrl, orgId, fr, to, limit, this.offset); //$NON-NLS-1$
         } else {
-            return String.format("%s/api/ng/%s/security/audit?limit=%d&offset=%d", this.contrastUrl, orgId, limit, this.offset);
+            return String.format("%s/api/ng/%s/security/audit?limit=%d&offset=%d", this.contrastUrl, orgId, limit, this.offset); //$NON-NLS-1$
         }
     }
 
@@ -67,7 +67,7 @@ public class OrganizationAuditLogApi extends AuditLogApi {
         Type contType = new TypeToken<AuditLogJson>() {
         }.getType();
         AuditLogJson auditJson = gson.fromJson(response, contType);
-        if (!auditJson.getSuccess().equals("true")) {
+        if (!auditJson.getSuccess().equals("true")) { //$NON-NLS-1$
             return null;
         }
         this.totalCount = auditJson.getTotal();
@@ -92,9 +92,9 @@ public class OrganizationAuditLogApi extends AuditLogApi {
             Matcher m6 = userPtn6.matcher(audit.getMessage());
             Matcher m7 = userPtn7.matcher(audit.getMessage());
             if (m0.find()) {
-                audit.setUserName(String.format("%s Administrators", m0.group(1).replaceAll("'", "")));
+                audit.setUserName(String.format("%s Administrators", m0.group(1).replaceAll("'", ""))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             } else if (m1.find()) {
-                audit.setUserName(m1.group(1).replaceAll("'", ""));
+                audit.setUserName(m1.group(1).replaceAll("'", "")); //$NON-NLS-1$ //$NON-NLS-2$
             } else if (m2.find()) {
                 audit.setUserName(m2.group(1));
             } else if (m3.find()) {
@@ -104,11 +104,11 @@ public class OrganizationAuditLogApi extends AuditLogApi {
             } else if (m5.find()) {
                 audit.setUserName(m5.group(1));
             } else if (m6.find()) {
-                audit.setUserName(m6.group(1).replaceAll("'", ""));
+                audit.setUserName(m6.group(1).replaceAll("'", "")); //$NON-NLS-1$ //$NON-NLS-2$
             } else if (m7.find()) {
-                audit.setUserName(m7.group(1).replaceAll("'", ""));
+                audit.setUserName(m7.group(1).replaceAll("'", "")); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
-                audit.setUserName("SYSTEM");
+                audit.setUserName("SYSTEM"); //$NON-NLS-1$
             }
         }
         return audits;
