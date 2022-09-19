@@ -192,10 +192,10 @@ public class OtherPreferencePage extends PreferencePage {
         List<String> errors = new ArrayList<String>();
         // Limit
         if (this.auditLogLimitTxt.getText().isEmpty()) {
-            errors.add("・呼び出し1回あたりの取得数を指定してください。");
+            errors.add(Messages.getString("OtherPreferencePage.perform_error_limit_empty")); //$NON-NLS-1$
         } else {
             if (!StringUtils.isNumeric(this.auditLogLimitTxt.getText())) {
-                errors.add("・呼び出し1回あたりの取得数は数値を指定してください。");
+                errors.add(Messages.getString("OtherPreferencePage.perform_error_limit_numeric")); //$NON-NLS-1$
             }
         }
         // Sleep
