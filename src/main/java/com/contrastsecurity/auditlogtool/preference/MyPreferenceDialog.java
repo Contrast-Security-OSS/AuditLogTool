@@ -18,7 +18,7 @@ public class MyPreferenceDialog extends PreferenceDialog {
     @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
-        newShell.setText("AdminTool設定");
+        newShell.setText("AdminLogTool設定");
     }
 
     @Override
