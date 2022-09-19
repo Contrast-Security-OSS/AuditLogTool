@@ -92,7 +92,7 @@ public class AuditLogFilterDialog extends Dialog {
         GridData orgNameGrpGrDt = new GridData(GridData.FILL_BOTH);
         orgNameGrpGrDt.minimumWidth = 200;
         orgNameGrp.setLayoutData(orgNameGrpGrDt);
-        orgNameGrp.setText("組織名");
+        orgNameGrp.setText(Messages.getString("AuditLogFilterDialog.filter_organization_group_title")); //$NON-NLS-1$
 
         final Table orgNameTable = new Table(orgNameGrp, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION);
         GridData orgNameTableGrDt = new GridData(GridData.FILL_BOTH);
@@ -140,7 +140,7 @@ public class AuditLogFilterDialog extends Dialog {
         GridData orgNameBulkOffBtnGrDt = new GridData();
         orgNameBulkOffBtnGrDt.minimumWidth = 50;
         orgNameBulkOffBtn.setLayoutData(orgNameBulkOffBtnGrDt);
-        orgNameBulkOffBtn.setText("すべてoff");
+        orgNameBulkOffBtn.setText(Messages.getString("AuditLogFilterDialog.all_off_button_title")); //$NON-NLS-1$
         orgNameBulkOffBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -154,7 +154,7 @@ public class AuditLogFilterDialog extends Dialog {
         GridData orgNameBulkOnBtnGrDt = new GridData();
         orgNameBulkOnBtnGrDt.minimumWidth = 50;
         orgNameBulkOnBtn.setLayoutData(orgNameBulkOnBtnGrDt);
-        orgNameBulkOnBtn.setText("すべてon");
+        orgNameBulkOnBtn.setText(Messages.getString("AuditLogFilterDialog.all_on_button_title")); //$NON-NLS-1$
         orgNameBulkOnBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -197,7 +197,7 @@ public class AuditLogFilterDialog extends Dialog {
         GridData userNameGrpGrDt = new GridData(GridData.FILL_BOTH);
         userNameGrpGrDt.minimumWidth = 200;
         userNameGrp.setLayoutData(userNameGrpGrDt);
-        userNameGrp.setText("ユーザー名");
+        userNameGrp.setText(Messages.getString("AuditLogFilterDialog.filter_user_group_title")); //$NON-NLS-1$
 
         final Table userNameTable = new Table(userNameGrp, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION);
         GridData userNameTableGrDt = new GridData(GridData.FILL_BOTH);
@@ -244,7 +244,7 @@ public class AuditLogFilterDialog extends Dialog {
         GridData userNameBulkOffBtnGrDt = new GridData();
         userNameBulkOffBtnGrDt.minimumWidth = 50;
         userNameBulkOffBtn.setLayoutData(userNameBulkOffBtnGrDt);
-        userNameBulkOffBtn.setText("すべてoff");
+        userNameBulkOffBtn.setText(Messages.getString("AuditLogFilterDialog.all_off_button_title")); //$NON-NLS-1$
         userNameBulkOffBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -258,7 +258,7 @@ public class AuditLogFilterDialog extends Dialog {
         GridData userNameBulkOnBtnGrDt = new GridData();
         userNameBulkOnBtnGrDt.minimumWidth = 50;
         userNameBulkOnBtn.setLayoutData(userNameBulkOnBtnGrDt);
-        userNameBulkOnBtn.setText("すべてon");
+        userNameBulkOnBtn.setText(Messages.getString("AuditLogFilterDialog.all_on_button_title")); //$NON-NLS-1$
         userNameBulkOnBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -293,12 +293,12 @@ public class AuditLogFilterDialog extends Dialog {
         // });
 
         // #################### メッセージ #################### //
-        String keywordInclude = "";
+        String keywordInclude = ""; //$NON-NLS-1$
         Set<Filter> msgIncludeSet = filterMap.get(FilterEnum.MESSAGE_INCLUDE);
         if (msgIncludeSet != null && !msgIncludeSet.isEmpty()) {
             keywordInclude = msgIncludeSet.iterator().next().getLabel();
         }
-        String keywordExclude = "";
+        String keywordExclude = ""; //$NON-NLS-1$
         Set<Filter> msgExcludeSet = filterMap.get(FilterEnum.MESSAGE_EXCLUDE);
         if (msgExcludeSet != null && !msgExcludeSet.isEmpty()) {
             keywordExclude = msgExcludeSet.iterator().next().getLabel();
@@ -312,11 +312,11 @@ public class AuditLogFilterDialog extends Dialog {
         GridData messageGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         messageGrpGrDt.horizontalSpan = 2;
         messageGrp.setLayoutData(messageGrpGrDt);
-        messageGrp.setText("メッセージ");
+        messageGrp.setText(Messages.getString("AuditLogFilterDialog.filter_message_group_title")); //$NON-NLS-1$
 
         messageIncludeFilter = new Text(messageGrp, SWT.BORDER);
         messageIncludeFilter.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        messageIncludeFilter.setMessage("この文字列が含まれている監査ログを対象とします...");
+        messageIncludeFilter.setMessage(Messages.getString("AuditLogFilterDialog.filter_message_include_description")); //$NON-NLS-1$
         messageIncludeFilter.setText(keywordInclude);
         messageIncludeFilter.addModifyListener(new ModifyListener() {
             @Override
@@ -324,11 +324,11 @@ public class AuditLogFilterDialog extends Dialog {
                 checkStateUpdate();
             }
         });
-        new Label(messageGrp, SWT.LEFT).setText("を含む");
+        new Label(messageGrp, SWT.LEFT).setText(Messages.getString("AuditLogFilterDialog.filter_message_include_label")); //$NON-NLS-1$
 
         messageExcludeFilter = new Text(messageGrp, SWT.BORDER);
         messageExcludeFilter.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        messageExcludeFilter.setMessage("この文字列が含まれていない監査ログを対象とします...");
+        messageExcludeFilter.setMessage(Messages.getString("AuditLogFilterDialog.filter_message_exclude_description")); //$NON-NLS-1$
         messageExcludeFilter.setText(keywordExclude);
         messageExcludeFilter.addModifyListener(new ModifyListener() {
             @Override
@@ -336,7 +336,7 @@ public class AuditLogFilterDialog extends Dialog {
                 checkStateUpdate();
             }
         });
-        new Label(messageGrp, SWT.LEFT).setText("を含まない");
+        new Label(messageGrp, SWT.LEFT).setText(Messages.getString("AuditLogFilterDialog.filter_message_exclude_label")); //$NON-NLS-1$
 
         // #################### 一時グループ #################### //
         Group tempGroupLogGrp = new Group(composite, SWT.NONE);
@@ -347,13 +347,13 @@ public class AuditLogFilterDialog extends Dialog {
         GridData tempGroupLogGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         tempGroupLogGrpGrDt.horizontalSpan = 2;
         tempGroupLogGrp.setLayoutData(tempGroupLogGrpGrDt);
-        tempGroupLogGrp.setText("その他");
+        tempGroupLogGrp.setText(Messages.getString("AuditLogFilterDialog.filter_other_group_title")); //$NON-NLS-1$
 
         showTempGroupLogFlg = new Button(tempGroupLogGrp, SWT.CHECK);
         GridData showCreateGroupLogFlgGrDt = new GridData(GridData.FILL_HORIZONTAL);
         showCreateGroupLogFlgGrDt.horizontalSpan = 2;
         showTempGroupLogFlg.setLayoutData(showCreateGroupLogFlgGrDt);
-        showTempGroupLogFlg.setText("このツールによる一時作成グループに関するログ");
+        showTempGroupLogFlg.setText(Messages.getString("AuditLogFilterDialog.filter_other_show_temp_group_log")); //$NON-NLS-1$
         showTempGroupLogFlg.setSelection(filterMap.get(FilterEnum.TEMP_GROUP_LOG).iterator().next().isValid());
         showTempGroupLogFlg.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -402,17 +402,17 @@ public class AuditLogFilterDialog extends Dialog {
         msgExcludeFilterSet.add(new Filter(messageExcludeFilter.getText()));
         filterMap.put(FilterEnum.MESSAGE_EXCLUDE, msgExcludeFilterSet);
         // 一時グループ
-        Filter tempGroupFilter = new Filter("NONAME");
+        Filter tempGroupFilter = new Filter("NONAME"); //$NON-NLS-1$
         tempGroupFilter.setValid(showTempGroupLogFlg.getSelection());
         filterMap.get(FilterEnum.TEMP_GROUP_LOG).clear();
         filterMap.get(FilterEnum.TEMP_GROUP_LOG).add(tempGroupFilter);
 
-        support.firePropertyChange("auditFilter", null, filterMap);
+        support.firePropertyChange("auditFilter", null, filterMap); //$NON-NLS-1$
     }
 
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
-        createButton(parent, IDialogConstants.CANCEL_ID, "閉じる", true);
+        createButton(parent, IDialogConstants.CANCEL_ID, Messages.getString("AuditLogFilterDialog.close_button_title"), true); //$NON-NLS-1$
     }
 
     @Override
@@ -433,7 +433,7 @@ public class AuditLogFilterDialog extends Dialog {
     @Override
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
-        newShell.setText("監査ログフィルター");
+        newShell.setText(Messages.getString("AuditLogFilterDialog.auditlog_filter_dialog_title")); //$NON-NLS-1$
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
