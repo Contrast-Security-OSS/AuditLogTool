@@ -190,6 +190,15 @@ public class OtherPreferencePage extends PreferencePage {
             return true;
         }
         List<String> errors = new ArrayList<String>();
+        // Limit
+        if (this.auditLogLimitTxt.getText().isEmpty()) {
+            errors.add("・呼び出し1回あたりの取得数を指定してください。");
+        } else {
+            if (!StringUtils.isNumeric(this.auditLogLimitTxt.getText())) {
+                errors.add("・呼び出し1回あたりの取得数は数値を指定してください。");
+            }
+        }
+        // Sleep
         if (this.auditLogSleepTxt.getText().isEmpty()) {
             errors.add(Messages.getString("OtherPreferencePage.perform_error_sleep_empty")); //$NON-NLS-1$
         } else {
