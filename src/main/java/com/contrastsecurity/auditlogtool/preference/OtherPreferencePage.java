@@ -44,18 +44,23 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.contrastsecurity.auditlogtool.Messages;
+
 public class OtherPreferencePage extends PreferencePage {
 
     private Combo termStartMonthCombo;
-    Pattern ptn = Pattern.compile("^[0-9]{2}-[0-9]{2}$");
-    public static String[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Oct", "Nov", "Dec" };
-    public static String[] WEEKDAYS = { "日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日" };
+    Pattern ptn = Pattern.compile("^[0-9]{2}-[0-9]{2}$"); //$NON-NLS-1$
+    public static String[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Oct", "Nov", "Dec" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$
+    public static String[] WEEKDAYS = { Messages.getString("OtherPreferencePage.start_weekday_sunday"), Messages.getString("OtherPreferencePage.start_weekday_monday"), //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString("OtherPreferencePage.start_weekday_tuesday"), Messages.getString("OtherPreferencePage.start_weekday_wednesday"), //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString("OtherPreferencePage.start_weekday_thursday"), Messages.getString("OtherPreferencePage.start_weekday_friday"), //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString("OtherPreferencePage.start_weekday_saturday") }; //$NON-NLS-1$
     private List<Button> weekDayBtns = new ArrayList<Button>();
     private Text auditLogLimitTxt;
     private Text auditLogSleepTxt;
 
     public OtherPreferencePage() {
-        super("その他設定");
+        super(Messages.getString("OtherPreferencePage.other_settings_title")); //$NON-NLS-1$
     }
 
     @Override
@@ -79,9 +84,9 @@ public class OtherPreferencePage extends PreferencePage {
         protectGrp.setLayout(protectGrpLt);
         GridData protectGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         protectGrp.setLayoutData(protectGrpGrDt);
-        protectGrp.setText("監査ログ取得期間の設定");
+        protectGrp.setText(Messages.getString("OtherPreferencePage.target_term_settings_group_title")); //$NON-NLS-1$
 
-        new Label(protectGrp, SWT.LEFT).setText("期首：");
+        new Label(protectGrp, SWT.LEFT).setText(Messages.getString("OtherPreferencePage.first_month_label_title")); //$NON-NLS-1$
         termStartMonthCombo = new Combo(protectGrp, SWT.DROP_DOWN | SWT.READ_ONLY);
         termStartMonthCombo.setItems(MONTHS);
         termStartMonthCombo.setText(ps.getString(PreferenceConstants.TERM_START_MONTH));
@@ -93,7 +98,7 @@ public class OtherPreferencePage extends PreferencePage {
         GridData weekDayGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         weekDayGrpGrDt.horizontalSpan = 2;
         weekDayGrp.setLayoutData(weekDayGrpGrDt);
-        weekDayGrp.setText("週の開始");
+        weekDayGrp.setText(Messages.getString("OtherPreferencePage.start_weekday_label_title")); //$NON-NLS-1$
         int weekDayIdx = 0;
         for (String weekDay : WEEKDAYS) {
             Button weekDayBtn = new Button(weekDayGrp, SWT.RADIO);
@@ -115,14 +120,14 @@ public class OtherPreferencePage extends PreferencePage {
         sleepGrp.setLayout(sleepGrpLt);
         GridData sleepGrpGrDt = new GridData(GridData.FILL_HORIZONTAL);
         sleepGrp.setLayoutData(sleepGrpGrDt);
-        sleepGrp.setText("API呼び出し制御");
+        sleepGrp.setText(Messages.getString("OtherPreferencePage.api_call_settings_group_title")); //$NON-NLS-1$
 
-        new Label(sleepGrp, SWT.LEFT).setText("呼び出し1回あたりの取得数（1000までは動作確認済み）：");
+        new Label(sleepGrp, SWT.LEFT).setText(Messages.getString("OtherPreferencePage.api_call_auditlog_limit")); //$NON-NLS-1$
         auditLogLimitTxt = new Text(sleepGrp, SWT.BORDER);
         auditLogLimitTxt.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         auditLogLimitTxt.setText(ps.getString(PreferenceConstants.LIMIT_AUDITLOG));
 
-        new Label(sleepGrp, SWT.LEFT).setText("呼び出し間隔スリープ（ミリ秒）：");
+        new Label(sleepGrp, SWT.LEFT).setText(Messages.getString("OtherPreferencePage.api_call_auditlog_sleep")); //$NON-NLS-1$
         auditLogSleepTxt = new Text(sleepGrp, SWT.BORDER);
         auditLogSleepTxt.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         auditLogSleepTxt.setText(ps.getString(PreferenceConstants.SLEEP_AUDITLOG));
@@ -131,7 +136,7 @@ public class OtherPreferencePage extends PreferencePage {
         GridData descLblGrDt = new GridData(GridData.FILL_HORIZONTAL);
         descLblGrDt.horizontalSpan = 2;
         descLbl.setLayoutData(descLblGrDt);
-        descLbl.setText("※ 取得数とスリープの組み合わせで、監査ログの取得に要する時間を調整できます。");
+        descLbl.setText(Messages.getString("OtherPreferencePage.api_call_auditlog_description")); //$NON-NLS-1$
 
         Composite buttonGrp = new Composite(parent, SWT.NONE);
         GridLayout buttonGrpLt = new GridLayout(2, false);
@@ -148,7 +153,7 @@ public class OtherPreferencePage extends PreferencePage {
         GridData defaultBtnGrDt = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
         defaultBtnGrDt.widthHint = 90;
         defaultBtn.setLayoutData(defaultBtnGrDt);
-        defaultBtn.setText("デフォルトに戻す");
+        defaultBtn.setText(Messages.getString("OtherPreferencePage.restore_defaults_button_title")); //$NON-NLS-1$
         defaultBtn.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 termStartMonthCombo.setText(ps.getDefaultString(PreferenceConstants.TERM_START_MONTH));
@@ -166,7 +171,7 @@ public class OtherPreferencePage extends PreferencePage {
         GridData applyBtnGrDt = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
         applyBtnGrDt.widthHint = 90;
         applyBtn.setLayoutData(applyBtnGrDt);
-        applyBtn.setText("適用");
+        applyBtn.setText(Messages.getString("OtherPreferencePage.apply_button_title")); //$NON-NLS-1$
         applyBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -186,16 +191,16 @@ public class OtherPreferencePage extends PreferencePage {
         }
         List<String> errors = new ArrayList<String>();
         if (this.auditLogSleepTxt.getText().isEmpty()) {
-            errors.add("・脆弱性取得間隔スリープを指定してください。");
+            errors.add(Messages.getString("OtherPreferencePage.perform_error_sleep_empty")); //$NON-NLS-1$
         } else {
             if (!StringUtils.isNumeric(this.auditLogSleepTxt.getText())) {
-                errors.add("・脆弱性取得間隔スリープは数値を指定してください。");
+                errors.add(Messages.getString("OtherPreferencePage.perform_error_sleep_numeric")); //$NON-NLS-1$
             }
         }
         ps.setValue(PreferenceConstants.LIMIT_AUDITLOG, this.auditLogLimitTxt.getText());
         ps.setValue(PreferenceConstants.SLEEP_AUDITLOG, this.auditLogSleepTxt.getText());
         if (!errors.isEmpty()) {
-            MessageDialog.openError(getShell(), "その他設定", String.join("\r\n", errors));
+            MessageDialog.openError(getShell(), Messages.getString("OtherPreferencePage.other_settings_title"), String.join("\r\n", errors)); //$NON-NLS-1$ //$NON-NLS-2$
             return false;
         } else {
             ps.setValue(PreferenceConstants.TERM_START_MONTH, this.termStartMonthCombo.getText());

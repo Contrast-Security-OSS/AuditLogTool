@@ -24,40 +24,40 @@
 package com.contrastsecurity.auditlogtool.preference;
 
 public class PreferenceConstants {
-    public static final String CONTRAST_URL = new String("com.contrastsecurity.auditlogtool.contrast_url");
-    public static final String USERNAME = new String("com.contrastsecurity.auditlogtool.username");
-    public static final String SERVICE_KEY = new String("com.contrastsecurity.auditlogtool.service_key");
-    public static final String API_KEY = new String("com.contrastsecurity.auditlogtool.api_key");
-    public static final String ORG_ID = new String("com.contrastsecurity.auditlogtool.org_id");
-    public static final String IS_SUPERADMIN = new String("com.contrastsecurity.auditlogtool.is_superadmin");
-    public static final String IS_CREATEGROUP = new String("com.contrastsecurity.auditlogtool.is_creategroup");
-    public static final String GROUP_NAME = new String("com.contrastsecurity.auditlogtool.group_name");
-    public static final String TARGET_ORGS = new String("com.contrastsecurity.auditlogtool.target_orgs");
+    public static final String CONTRAST_URL = new String("com.contrastsecurity.auditlogtool.contrast_url"); //$NON-NLS-1$
+    public static final String USERNAME = new String("com.contrastsecurity.auditlogtool.username"); //$NON-NLS-1$
+    public static final String SERVICE_KEY = new String("com.contrastsecurity.auditlogtool.service_key"); //$NON-NLS-1$
+    public static final String API_KEY = new String("com.contrastsecurity.auditlogtool.api_key"); //$NON-NLS-1$
+    public static final String ORG_ID = new String("com.contrastsecurity.auditlogtool.org_id"); //$NON-NLS-1$
+    public static final String IS_SUPERADMIN = new String("com.contrastsecurity.auditlogtool.is_superadmin"); //$NON-NLS-1$
+    public static final String IS_CREATEGROUP = new String("com.contrastsecurity.auditlogtool.is_creategroup"); //$NON-NLS-1$
+    public static final String GROUP_NAME = new String("com.contrastsecurity.auditlogtool.group_name"); //$NON-NLS-1$
+    public static final String TARGET_ORGS = new String("com.contrastsecurity.auditlogtool.target_orgs"); //$NON-NLS-1$
 
-    public static final String PROXY_YUKO = new String("com.contrastsecurity.auditlogtool.proxy_yuko");
-    public static final String PROXY_HOST = new String("com.contrastsecurity.auditlogtool.proxy_host");
-    public static final String PROXY_PORT = new String("com.contrastsecurity.auditlogtool.proxy_port");
-    public static final String PROXY_AUTH = new String("com.contrastsecurity.auditlogtool.proxy_auth");
-    public static final String PROXY_USER = new String("com.contrastsecurity.auditlogtool.proxy_user");
-    public static final String PROXY_PASS = new String("com.contrastsecurity.auditlogtool.proxy_pass");
-    public static final String PROXY_TMP_USER = new String("com.contrastsecurity.auditlogtool.proxy_tmp_user");
-    public static final String PROXY_TMP_PASS = new String("com.contrastsecurity.auditlogtool.proxy_tmp_pass");
-    public static final String IGNORE_SSLCERT_CHECK = new String("com.contrastsecurity.auditlogtool.ignore_sslcert_check");
-    public static final String CONNECTION_TIMEOUT = new String("com.contrastsecurity.auditlogtool.connection_timeout");
-    public static final String SOCKET_TIMEOUT = new String("com.contrastsecurity.auditlogtool.socket_timeout");
+    public static final String PROXY_YUKO = new String("com.contrastsecurity.auditlogtool.proxy_yuko"); //$NON-NLS-1$
+    public static final String PROXY_HOST = new String("com.contrastsecurity.auditlogtool.proxy_host"); //$NON-NLS-1$
+    public static final String PROXY_PORT = new String("com.contrastsecurity.auditlogtool.proxy_port"); //$NON-NLS-1$
+    public static final String PROXY_AUTH = new String("com.contrastsecurity.auditlogtool.proxy_auth"); //$NON-NLS-1$
+    public static final String PROXY_USER = new String("com.contrastsecurity.auditlogtool.proxy_user"); //$NON-NLS-1$
+    public static final String PROXY_PASS = new String("com.contrastsecurity.auditlogtool.proxy_pass"); //$NON-NLS-1$
+    public static final String PROXY_TMP_USER = new String("com.contrastsecurity.auditlogtool.proxy_tmp_user"); //$NON-NLS-1$
+    public static final String PROXY_TMP_PASS = new String("com.contrastsecurity.auditlogtool.proxy_tmp_pass"); //$NON-NLS-1$
+    public static final String IGNORE_SSLCERT_CHECK = new String("com.contrastsecurity.auditlogtool.ignore_sslcert_check"); //$NON-NLS-1$
+    public static final String CONNECTION_TIMEOUT = new String("com.contrastsecurity.auditlogtool.connection_timeout"); //$NON-NLS-1$
+    public static final String SOCKET_TIMEOUT = new String("com.contrastsecurity.auditlogtool.socket_timeout"); //$NON-NLS-1$
 
-    public static final String LIMIT_AUDITLOG = new String("com.contrastsecurity.auditlogtool.api_limit");
-    public static final String SLEEP_AUDITLOG = new String("com.contrastsecurity.auditlogtool.api_sleep");
+    public static final String LIMIT_AUDITLOG = new String("com.contrastsecurity.auditlogtool.api_limit"); //$NON-NLS-1$
+    public static final String SLEEP_AUDITLOG = new String("com.contrastsecurity.auditlogtool.api_sleep"); //$NON-NLS-1$
 
-    public static final String TERM_START_MONTH = new String("com.contrastsecurity.auditlogtool.term_start_month");
-    public static final String START_WEEKDAY = new String("com.contrastsecurity.auditlogtool.start_weekday");
-    public static final String AUDITLOG_CREATED_DATE_FILTER = new String("com.contrastsecurity.auditlogtool.auditlog_created_date_filter");
-    public static final String CSV_OUT_HEADER_AUDITLOG = new String("com.contrastsecurity.auditlogtool.csv_out_header_auditlog");
-    public static final String CSV_COLUMN_AUDITLOG = new String("com.contrastsecurity.auditlogtool.csv_out_column_auditlog");
-    public static final String CSV_FILE_FORMAT_AUDITLOG = new String("com.contrastsecurity.auditlogtool.csv_file_format_auditlog");
+    public static final String TERM_START_MONTH = new String("com.contrastsecurity.auditlogtool.term_start_month"); //$NON-NLS-1$
+    public static final String START_WEEKDAY = new String("com.contrastsecurity.auditlogtool.start_weekday"); //$NON-NLS-1$
+    public static final String AUDITLOG_CREATED_DATE_FILTER = new String("com.contrastsecurity.auditlogtool.auditlog_created_date_filter"); //$NON-NLS-1$
+    public static final String CSV_OUT_HEADER_AUDITLOG = new String("com.contrastsecurity.auditlogtool.csv_out_header_auditlog"); //$NON-NLS-1$
+    public static final String CSV_COLUMN_AUDITLOG = new String("com.contrastsecurity.auditlogtool.csv_out_column_auditlog"); //$NON-NLS-1$
+    public static final String CSV_FILE_FORMAT_AUDITLOG = new String("com.contrastsecurity.auditlogtool.csv_file_format_auditlog"); //$NON-NLS-1$
 
-    public static final String OPENED_MAIN_TAB_IDX = new String("com.contrastsecurity.auditlogtool.opened_main_tab_idx");
-    public static final String OPENED_SUB_TAB_IDX = new String("com.contrastsecurity.auditlogtool.opened_sub_tab_idx");
-    public static final String MEM_WIDTH = new String("com.contrastsecurity.auditlogtool.mem_width");
-    public static final String MEM_HEIGHT = new String("com.contrastsecurity.auditlogtool.mem_height");
+    public static final String OPENED_MAIN_TAB_IDX = new String("com.contrastsecurity.auditlogtool.opened_main_tab_idx"); //$NON-NLS-1$
+    public static final String OPENED_SUB_TAB_IDX = new String("com.contrastsecurity.auditlogtool.opened_sub_tab_idx"); //$NON-NLS-1$
+    public static final String MEM_WIDTH = new String("com.contrastsecurity.auditlogtool.mem_width"); //$NON-NLS-1$
+    public static final String MEM_HEIGHT = new String("com.contrastsecurity.auditlogtool.mem_height"); //$NON-NLS-1$
 }
