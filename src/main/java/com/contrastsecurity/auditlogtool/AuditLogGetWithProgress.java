@@ -176,9 +176,6 @@ public class AuditLogGetWithProgress implements IRunnableWithProgress {
                             groups.addAll(tmpGroups);
                             groupIncompleteFlg = totalGroupCount > groups.size();
                         }
-                        for (Group grp : groups) {
-                            System.out.println(grp.getName());
-                        }
                         int groupId = -1;
                         for (Group grp : groups) {
                             if (grp.getName().equals(this.ps.getString(PreferenceConstants.GROUP_NAME))) {
