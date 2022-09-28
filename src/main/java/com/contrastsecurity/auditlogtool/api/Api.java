@@ -97,11 +97,6 @@ public abstract class Api {
         this.ignoreStatusCodes = new ArrayList<Integer>();
     }
 
-    public Api(Shell shell, IPreferenceStore ps, Organization org, boolean jsonResponseFlg) {
-        this(shell, ps, org);
-        this.ignoreStatusCodes = new ArrayList<Integer>();
-    }
-
     public void setIgnoreStatusCodes(List<Integer> ignoreStatusCodes) {
         this.ignoreStatusCodes = ignoreStatusCodes;
     }
