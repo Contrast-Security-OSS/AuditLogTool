@@ -1,5 +1,5 @@
 ### 概要
-TeamServerの監査ログを取得するツールです。CSV形式で出力することもできます。  
+Contrastサーバの監査ログを取得するツールです。CSV形式で出力することもできます。  
 使用方法の詳細については [Release](https://github.com/Contrast-Security-OSS/AuditLogTool/releases) からダウンロードできるzipファイルに同梱のマニュアルpdfをご確認ください。
 
 
