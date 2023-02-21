@@ -76,7 +76,6 @@ Eclipseでプロジェクトをリフレッシュすると、あとは実行でc
 - jarpackage.shを実行します。
   ```bash
   ./jarpackage.sh
-  ./jarpackage_auditlog.sh
   ```
   build/libs/bundle下にappフォルダが作られます。
 
