@@ -13,7 +13,7 @@ javapackager \
   -srcfiles ${APP_NAME}-${APP_VERSION}.jar \
   -outdir  ./build/libs \
   -outfile ${APP_DIR_NAME} \
-  -appclass com.contrastsecurity.csvdltool.Main \
+  -appclass com.contrastsecurity.auditlogtool.Main \
   -name "${APP_NAME}_${APP_VERSION}" \
   -title "${APP_NAME}" \
   -BjvmOptions=-XstartOnFirstThread \
