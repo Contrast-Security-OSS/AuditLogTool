@@ -320,19 +320,6 @@ public class Main implements PropertyChangeListener {
             }
         });
 
-        Listener listener = new Listener() {
-            @Override
-            public void handleEvent(Event event) {
-                if (event.stateMask == SWT.CTRL) {
-                    int num = Character.getNumericValue(event.character);
-                    if (num > -1) {
-                        support.firePropertyChange("userswitch", 0, num);
-                    }
-                }
-            }
-        };
-        display.addFilter(SWT.KeyUp, listener);
-
         GridLayout baseLayout = new GridLayout(1, false);
         baseLayout.marginWidth = 8;
         baseLayout.marginBottom = 0;
@@ -664,7 +651,11 @@ public class Main implements PropertyChangeListener {
         });
 
         MenuItem miSelectAll = new MenuItem(menuTable, SWT.NONE);
-        miSelectAll.setText("すべて選択（Ctrl + A）");
+        if (OS.isFamilyMac()) {
+            miSelectAll.setText("すべて選択（Command + A）");
+        } else {
+            miSelectAll.setText("すべて選択（Ctrl + A）");
+        }
         miSelectAll.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -675,7 +666,7 @@ public class Main implements PropertyChangeListener {
         auditLogTable.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+                if ((e.stateMask == SWT.CTRL || e.stateMask == SWT.COMMAND) && e.keyCode == 'a') {
                     auditLogTable.selectAll();
                     e.doit = false;
                 }
